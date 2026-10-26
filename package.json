@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "npx --yes serve site -l 5173",
-    "check": "node --check site/assets/app.js && node --check site/assets/track.js && node --check netlify/functions/track.mjs && node --check netlify/functions/stats.mjs"
+    "check": "node --check site/assets/app.js && node --check site/assets/art.js && node --check site/assets/shell.js && node --check site/assets/track.js && node --check netlify/functions/track.mjs && node --check netlify/functions/stats.mjs"
   },
   "dependencies": {
     "@netlify/blobs": "^8.1.0"

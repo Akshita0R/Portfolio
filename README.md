@@ -1,16 +1,19 @@
-# Postmarked — a portfolio delivered by post
+# Akshita R — Portfolio
 
-Projects issued as stamps, experience as postmarks, skills on a customs form, and a reply-paid postcard for contact. See [REPORT.md](REPORT.md) for the concept and design rationale.
+Cobalt blue, hand-drawn line art and a metro line for a menu. Product-manager case studies built from my résumé, with MedNear as the lead.
 
-## Edit your content
-Everything lives in **`site/assets/content.js`**. Put your résumé PDF at `site/assets/resume.pdf`.
+Live: https://akshita-r-portfolio.netlify.app
+
+## Structure
+- `site/index.html`: home (click-to-stamp ticket, platform, train windows), Selected Work, About, Play (doodle pad), contact
+- `site/case.html?id=…`: case study with section rail (Problem → … → Reflection)
+- `site/assets/content.js`: **all text and project data. Edit this file to update the site.**
+- `site/assets/art.js`: the line-art illustrations, drawn as SVG
+- `site/stats.html` + `netlify/functions/`: private, cookie-free visitor tracking (needs `STATS_TOKEN` on Netlify)
 
 ## Run locally
 ```bash
-npm run dev        # serves site/ at http://localhost:5173
+npm run dev   # http://localhost:5173
 ```
-(Or open `site/index.html` directly.) Tracking is disabled on localhost.
 
-## Deploy
-- **Netlify** (recommended): import the repo. Set the `STATS_TOKEN` env var, then view analytics at `/stats.html`.
-- **Vercel**: import the repo (`vercel.json` publishes `site/`). Static only: no tracking, and the contact form falls back to email.
+Pushing to `main` deploys automatically on Netlify.

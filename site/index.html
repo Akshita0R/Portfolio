@@ -5,197 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Akshita R — Portfolio</title>
   <meta name="description" content="Akshita R: Data Analyst moving into product management. Case studies including MedNear, an AI-assisted medicine-availability app taken from 0 to 1." />
-  <meta name="theme-color" content="#efe6d4" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' fill='%23c4372b'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E" />
+  <meta name="theme-color" content="#2350dc" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%232350dc'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%23fff' stroke-width='2.5'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <a class="skip" href="#letter">Skip to content</a>
+  <a class="skip" href="#work">Skip to work</a>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" /><feDisplacementMap in="SourceGraphic" scale="2.4" /></filter>
+  </svg>
 
-  <header class="nav">
-    <a class="nav__brand" href="#top" data-brand>№ —</a>
-    <nav class="nav__links" aria-label="Sections">
-      <a href="#letter">Letter</a>
-      <a href="#collection">Collection</a>
-      <a href="#route">Route</a>
-      <a href="#customs">Customs</a>
-      <a href="#postcard">Postcard</a>
-    </nav>
-    <button class="nav__ink" type="button" aria-pressed="true" data-ink-toggle title="Click anywhere on the paper to stamp it">
-      <span class="nav__ink-dot" aria-hidden="true"></span> Ink
-    </button>
-  </header>
+  <aside class="side" data-side></aside>
+  <header class="metro" data-metro></header>
 
-  <main id="top">
-    <!-- 1 · ENVELOPE -->
-    <section class="hero" aria-label="Envelope">
-      <div class="scene">
-        <div class="envelope" data-envelope>
-          <div class="envelope__face envelope__front">
-            <div class="airmail" aria-hidden="true"></div>
-            <div class="envelope__from" data-from></div>
-            <div class="envelope__label" aria-hidden="true">Par avion<br /><small>By air mail</small></div>
-            <div class="envelope__stamp-zone">
-              <div class="cancel" aria-hidden="true" data-cancel></div>
-              <div data-hero-stamp></div>
-              <div class="postmark postmark--hero" aria-hidden="true" data-postmark></div>
-            </div>
-            <div class="envelope__to">
-              <span class="envelope__to-label">To</span>
-              <p class="hand">You, the reader<br />whoever opened this<br />somewhere on the internet</p>
-            </div>
-            <h1 class="envelope__title"><span data-name></span><span class="envelope__role" data-role></span></h1>
-          </div>
-          <div class="envelope__face envelope__back" aria-hidden="true">
-            <div class="envelope__flap"></div>
-            <div class="envelope__peek"><span class="hand">Dear reader,</span></div>
-            <div class="seal" data-seal></div>
-          </div>
+  <main>
+    <!-- HOME -->
+    <section id="home" class="section" data-stop="home" aria-label="Home">
+      <div class="panels">
+        <div class="panel ticket-panel">
+          <p class="ticket-panel__hint">click to stamp</p>
+          <button class="ticket" type="button" data-ticket aria-label="Metro ticket from home to work. Click to stamp it.">
+            <span class="ticket__route">HOME <span aria-hidden="true">→</span> WORK <small>platform 1</small></span>
+            <span class="ticket__meta">Date<b data-today></b></span>
+            <span class="ticket__meta">Time<b data-time></b></span>
+            <span class="ticket__small">Valid for one portfolio · <span data-city></span> · fare: one good conversation</span>
+            <span class="ticket__stamp" aria-hidden="true" data-stamp></span>
+          </button>
+          <p class="ticket-panel__after">Validated. <a href="#work">Next stop: work ↓</a></p>
         </div>
-      </div>
-      <button class="btn btn--open" type="button" data-open>Open the envelope <span aria-hidden="true">↓</span></button>
-      <p class="hero__hint">Postmarked the day you arrived · <span data-today></span></p>
-    </section>
-
-    <!-- 2 · LETTER -->
-    <section id="letter" class="section letter-wrap" data-section="letter">
-      <article class="letter reveal">
-        <header class="letter__head">
-          <span class="mono" data-letter-place></span>
-          <span class="mono" data-today></span>
-        </header>
-        <div class="letter__body" data-letter></div>
-        <footer class="letter__sign">
-          <span data-signoff></span>
-          <span class="hand hand--sig" data-name></span>
-        </footer>
-        <div class="letter__actions">
-          <a class="btn" href="#collection">See the collection</a>
-          <a class="btn btn--ghost" data-resume download>Registered mail: résumé (PDF)</a>
-        </div>
-      </article>
-    </section>
-
-    <div class="tape" aria-hidden="true"><div class="tape__track" data-tape></div></div>
-
-    <section class="section meter-wrap" aria-label="Key numbers">
-      <p class="mono kicker">Postage meter · franked to date</p>
-      <ul class="meter" data-meter></ul>
-    </section>
-
-    <!-- 3 · COLLECTION -->
-    <section id="collection" class="section album" data-section="collection">
-      <header class="section__head">
-        <p class="mono kicker">Sheet II · Commemorative issues</p>
-        <h2>The Collection</h2>
-        <p class="section__lede" data-collection-lede></p>
-      </header>
-      <article class="featured reveal" data-featured></article>
-      <p class="mono album__label">Definitive issues · tap a stamp</p>
-      <ul class="album__grid" data-stamps></ul>
-    </section>
-
-    <!-- 4 · ROUTE -->
-    <section id="route" class="section route" data-section="route">
-      <header class="section__head">
-        <p class="mono kicker">Sheet III · Postal history</p>
-        <h2>The Route</h2>
-        <p class="section__lede">From backend engineering to product analytics to product. Latest first.</p>
-      </header>
-      <ol class="route__list" data-route></ol>
-      <div class="honours reveal">
-        <p class="mono kicker">Honours · franked along the way</p>
-        <ul class="honours__list" data-honours></ul>
+        <div class="panel panel--platform" data-art="platform"></div>
+        <div class="panel panel--wide" data-art="train"><span class="panel__caption">Now boarding · tap a window</span></div>
       </div>
     </section>
 
-    <!-- 5 · CUSTOMS -->
-    <section id="customs" class="section" data-section="customs">
-      <header class="section__head">
-        <p class="mono kicker">Sheet IV · Declared contents</p>
-        <h2>Customs</h2>
-      </header>
-      <div class="customs reveal">
-        <div class="customs__top">
-          <div>
-            <strong class="customs__title">Customs declaration</strong>
-            <span class="mono">CN 22 · May be opened officially</span>
+    <!-- WORK -->
+    <section id="work" class="section" data-stop="work">
+      <div class="work">
+        <div class="work__head">
+          <p class="kicker">Stop 02</p>
+          <h2>Selected<br />Work.</h2>
+        </div>
+        <div class="cards" data-cards></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section" data-stop="about">
+      <div class="about">
+        <div class="about__text reveal">
+          <p class="kicker">Stop 03 · About</p>
+          <h2 data-about-title></h2>
+          <div data-about-body></div>
+          <div class="about__links mono">
+            <a href="#work">See how I make product calls →</a>
+            <a data-resume-link target="_blank" rel="noopener">Read the full résumé ↗</a>
           </div>
-          <span class="customs__code mono">CN 22</span>
+          <p class="kicker">Experience · community</p>
+          <ul class="ledger" data-roles></ul>
+          <p class="kicker">Toolkit</p>
+          <dl class="skills" data-skills></dl>
         </div>
-        <div class="customs__boxes mono">
-          <span><i class="box"></i> Gift</span>
-          <span><i class="box"></i> Documents</span>
-          <span><i class="box box--x"></i> Commercial sample</span>
-          <span><i class="box"></i> Other</span>
-        </div>
-        <table class="customs__table">
-          <thead><tr><th scope="col">Detailed description of contents</th><th scope="col">Category</th></tr></thead>
-          <tbody data-customs></tbody>
-        </table>
-        <p class="customs__note" data-customs-note></p>
-        <div class="customs__foot">
-          <p class="mono">I certify that the particulars given in this declaration are correct.</p>
-          <p class="customs__sig"><span class="hand hand--sig" data-name></span><span class="mono" data-today></span></p>
+        <div class="about__art reveal">
+          <div class="panel" data-art="station"></div>
+          <figure class="polaroid" data-polaroid></figure>
         </div>
       </div>
     </section>
 
-    <!-- 6 · POSTCARD -->
-    <section id="postcard" class="section" data-section="postcard">
-      <header class="section__head">
-        <p class="mono kicker">Sheet V · Reply paid</p>
-        <h2>Send a postcard</h2>
-        <p class="section__lede">Already addressed and stamped. Just write.</p>
-      </header>
-      <form class="postcard reveal" name="postcard" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-postcard>
-        <input type="hidden" name="form-name" value="postcard" />
-        <p hidden><label>Leave empty <input name="bot-field" /></label></p>
-        <div class="postcard__msg">
-          <label class="field field--area">
-            <span class="mono">Message</span>
-            <textarea name="message" rows="6" required placeholder="Hi! Saw your collection and…"></textarea>
-          </label>
-          <label class="field">
-            <span class="mono">Your name</span>
-            <input name="name" autocomplete="name" required />
-          </label>
-          <label class="field">
-            <span class="mono">Reply to (email)</span>
-            <input name="email" type="email" autocomplete="email" required />
-          </label>
-        </div>
-        <div class="postcard__addr">
-          <div class="postcard__stamp" data-card-stamp></div>
-          <div class="postcard__lines">
-            <p class="hand" data-card-addr></p>
-          </div>
-          <button class="btn btn--post" type="submit">Post it <span aria-hidden="true">→</span></button>
-          <p class="postcard__status mono" role="status" data-card-status></p>
-        </div>
-        <div class="postcard__sent" aria-hidden="true" data-card-sent></div>
-      </form>
-      <ul class="elsewhere mono" data-links></ul>
+    <!-- PLAY -->
+    <section id="play" class="section play" data-stop="play">
+      <div class="play__page reveal">
+        <div data-art="construction"></div>
+        <p class="play__msg">Looks like you got off at the last stop… might as well doodle something below.</p>
+        <canvas class="play__canvas" data-doodle aria-label="Drawing area: draw with your mouse or finger"></canvas>
+        <div class="play__bar"><span class="play__hint">doodle here ↗</span><button class="btn" type="button" data-clear>Clear</button></div>
+      </div>
     </section>
+
+    <section class="contact" id="contact">
+      <p class="kicker">End of the line</p>
+      <h2>Let's build something<br />people trust.</h2>
+      <div class="contact__links" data-contact></div>
+    </section>
+
+    <footer class="footer">
+      <span>© <span data-year></span> <span data-name></span> · <span data-city></span></span>
+      <span>Illustrated &amp; coded by hand</span>
+    </footer>
   </main>
 
-  <footer class="footer mono">
-    <span>Postage paid · <span data-name></span> · <span data-year></span></span>
-    <span>Handmade, no templates. Click the paper to stamp it.</span>
-  </footer>
-
-  <dialog class="catalogue" data-catalogue aria-labelledby="cat-title">
-    <form method="dialog"><button class="catalogue__close" aria-label="Close">×</button></form>
-    <div class="catalogue__inner" data-catalogue-body></div>
-  </dialog>
-
-  <div class="ink-layer" aria-hidden="true" data-ink-layer></div>
-
   <script src="assets/content.js"></script>
-  <script src="assets/stamps.js"></script>
+  <script src="assets/art.js"></script>
+  <script src="assets/shell.js"></script>
   <script src="assets/track.js"></script>
   <script src="assets/app.js"></script>
 </body>

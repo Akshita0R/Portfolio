@@ -4,12 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex" />
-  <title>Postmaster's Ledger</title>
+  <title>Station Log</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,400;9..144,800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Newsreader:opsz,wght@6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/styles.css" />
   <style>
+    :root { --card: #fff; --ink: #2350dc; --ink-soft: #4a63c9; --ink-faint: #8090c8; --line: #c9d3f5; --red: #2350dc; --shadow: 0 6px 18px rgba(0,0,0,.18); }
+    .mono { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+    .field { display: grid; gap: 4px; } .field .mono { color: var(--faint); }
+    .tile, .book { color: var(--ink); }
+    .ledger { margin: 0 auto !important; border: 0 !important; }
     .ledger { max-width: 1000px; margin: 0 auto; padding: 48px var(--gutter) 80px; }
     .ledger h1 { font-size: clamp(40px, 7vw, 72px); margin: 8px 0 28px; }
     .ledger__bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-bottom: 32px; }
@@ -29,8 +34,8 @@
 </head>
 <body>
   <main class="ledger">
-    <p class="mono kicker"><a href="./">← Back to the envelope</a></p>
-    <h1>Postmaster's Ledger</h1>
+    <p class="kicker"><a href="./">← Back to the portfolio</a></p>
+    <h1>Station Log</h1>
     <form class="ledger__bar" data-form>
       <label class="field"><span class="mono">Access token</span><input type="password" name="token" required autocomplete="current-password" /></label>
       <label class="field"><span class="mono">Period</span>

@@ -108,3 +108,15 @@ Import the repo; `vercel.json` publishes `site/`. The page works fully, but `/ap
 2. Add real screenshots of MedNear to its case study (the biggest remaining upgrade).
 3. Pick a motif and ink for each project (or ask me for custom motifs, such as a stamp drawn for a specific project).
 4. Optional upgrades: a real photo engraved into the hero stamp (halftone filter), a "stamp sheet" view per project with screenshots, an OG share image of the envelope, and a custom domain.
+
+
+## 9. Version 3: "metro" redesign
+
+The layout follows the reference portfolio Akshita chose (elaineyu.design, studied from a screen recording), rebuilt from scratch with original illustrations and a Bengaluru-metro theme:
+- Fixed left sidebar: name, quote, Now / Prev / Next, résumé button
+- A metro line across the top as the menu (home · work · about · play), filling as you scroll
+- Home as comic panels: a **click-to-stamp metro ticket**, a platform pointing "WORK →", and a train whose windows link to each project
+- "Selected Work." cards with line-art scenes, label boxes and hover info (role, team, timeline)
+- Case studies with a vertical section rail, a facts box, tags and "what moved" numbers
+- About with a roles ledger, toolkit, station illustration and polaroid (add a photo via `photo` in content.js)
+- Play: "you got off at the last stop" doodle pad
