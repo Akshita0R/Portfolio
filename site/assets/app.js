@@ -26,7 +26,40 @@
   const roles = P.projects.filter((p) => p.type === "experience");
 
   // Home panels
-  $('[data-art="platform"]').innerHTML = Art.platform();
+  $('[data-art="platform"]').innerHTML = Art.platform() + '<div class="bubble" data-bubble role="status"></div><span class="dot-cursor" aria-hidden="true" data-dot></span>';
+
+  // Platform: the cursor is a dot; the commuter chats and turns to face you when you come close.
+  const plat = $('[data-art="platform"]'), bubble = $("[data-bubble]"), dot = $("[data-dot]"), who = $(".who", plat);
+  const LINES = [
+    "you can scroll ahead, I'll catch up",
+    "the purple line is always packed at 9",
+    "mind the gap… between the data and the users",
+    "checking which pharmacy is open. old habit.",
+    "next stop: work →",
+    "I'd A/B test this platform if I could",
+  ];
+  let line = -1;
+  const place = () => {
+    const pr = plat.getBoundingClientRect(), wr = who.getBoundingClientRect();
+    bubble.style.left = `${wr.right - pr.left + 8}px`;
+    bubble.style.top = `${wr.top - pr.top + 2}px`;
+  };
+  plat.addEventListener("pointerenter", () => {
+    line = (line + 1) % LINES.length;
+    bubble.textContent = LINES[line];
+    place();
+    plat.classList.add("is-chatting");
+  });
+  plat.addEventListener("pointermove", (e) => {
+    const pr = plat.getBoundingClientRect(), wr = who.getBoundingClientRect();
+    if (e.pointerType === "mouse") {
+      plat.classList.add("has-dot");
+      dot.style.transform = `translate(${e.clientX - pr.left}px, ${e.clientY - pr.top}px)`;
+    }
+    const near = Math.hypot(e.clientX - (wr.left + wr.width / 2), e.clientY - (wr.top + wr.height / 2)) < 140;
+    plat.classList.toggle("is-near", near);
+  });
+  plat.addEventListener("pointerleave", () => plat.classList.remove("is-chatting", "is-near", "has-dot"));
   $('[data-art="train"]').insertAdjacentHTML("beforeend", Art.train(
     projects.map((p) => ({ title: p.short || p.title, scene: p.scene, href: caseUrl(p) }))
   ));

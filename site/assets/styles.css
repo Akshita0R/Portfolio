@@ -224,6 +224,23 @@ main { margin-left: var(--side); padding: 76px var(--gutter) 0; }
 .case__next a:hover { text-decoration: underline; }
 @media (max-width: 820px) { .case { grid-template-columns: 1fr; } .case__rail { display: none; } .case__facts { grid-template-columns: 1fr; } }
 
+/* ------------------------------------------------- platform commuter ---- */
+.panel--platform { position: relative; }
+.who__front { opacity: 0; transition: opacity .2s; }
+.who__back { transition: opacity .2s; }
+.panel--platform.is-near .who__front { opacity: 1; }
+.panel--platform.is-near .who__back { opacity: 0; }
+.bubble {
+  position: absolute; z-index: 4; max-width: 210px; padding: 9px 12px; background: #fff; color: var(--blue);
+  border: 1.5px solid var(--blue); border-radius: 4px; font-size: 12px; line-height: 1.45;
+  opacity: 0; transform: translateY(6px); transition: opacity .25s, transform .25s; pointer-events: none;
+}
+.bubble::before { content: ""; position: absolute; left: -8px; top: 14px; width: 12px; height: 12px; background: #fff; border-left: 1.5px solid var(--blue); border-bottom: 1.5px solid var(--blue); transform: rotate(45deg); }
+.panel--platform.is-chatting .bubble { opacity: 1; transform: none; }
+.panel--platform.has-dot, .panel--platform.has-dot * { cursor: none; }
+.dot-cursor { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; border-radius: 50%; background: var(--blue); pointer-events: none; opacity: 0; z-index: 5; }
+.panel--platform.has-dot .dot-cursor { opacity: 1; }
+
 /* ------------------------------------------------------- stamp cursor ---- */
 .ticket-panel.has-stamper, .ticket-panel.has-stamper * { cursor: none; }
 .stamper { position: absolute; left: 0; top: 0; width: 110px; pointer-events: none; z-index: 5; opacity: 0; transition: opacity .15s; }

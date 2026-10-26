@@ -18,6 +18,17 @@ window.Art = (() => {
       <path d="M -8 -50 L -14 -10 L 14 -10 L 8 -50 Z" /><line x1="-6" y1="-10" x2="-7" y2="10" /><line x1="6" y1="-10" x2="7" y2="10" />
       <path d="M -11 12 h 6 M 5 12 h 6" /><path d="M -12 -30 l -4 16 M 12 -30 l 3 16" /></g>`;
 
+  // The commuter on the platform: a back view, and a front view shown when the cursor comes close.
+  const commuter = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})" class="who">
+      ${lines(7, (i) => `<line x1="${-16 + i * 5}" y1="6" x2="${-11 + i * 5}" y2="-2" stroke-width="1" />`)}
+      <path d="M -12 -48 C -16 -30 -16 -18 -14 -6 L 14 -6 C 16 -18 16 -30 12 -48 Q 0 -54 -12 -48 Z" fill="var(--panel)" />
+      <path d="M -9 -6 L -10 0 M 9 -6 L 10 0" /><path d="M -14 1 h 9 M 5 1 h 9" stroke-width="3" />
+      <path d="M -12 -40 l -5 22 M 12 -40 l 5 22" />
+      <g class="who__back"><circle cx="0" cy="-64" r="11" fill="currentColor" /><path d="M -11 -64 C -12 -52 -10 -46 -4 -44 L 4 -44 C 10 -46 12 -52 11 -64" fill="currentColor" /></g>
+      <g class="who__front"><circle cx="0" cy="-64" r="11" fill="var(--panel)" /><path d="M -11 -62 C -12 -52 -10 -46 -6 -44 M 11 -62 C 12 -52 10 -46 6 -44 M -11 -64 Q -8 -78 0 -76 Q 9 -77 11 -64 Q 4 -70 -4 -68 Z" fill="currentColor" />
+        <circle cx="-4" cy="-62" r="1.3" fill="currentColor" /><circle cx="4" cy="-62" r="1.3" fill="currentColor" /><path d="M -3 -57 q 3 2.5 6 0" stroke-width="1.4" /></g>
+    </g>`;
+
   // Home panel: station platform with a "towards work" sign.
   const platform = () => svg("0 0 520 300", `
     <path d="M 0 40 L 520 40 M 0 52 L 520 52" />
@@ -29,8 +40,8 @@ window.Art = (() => {
     <path d="M 0 252 L 520 252 M 0 262 L 520 262" />
     <path d="M 0 282 L 520 282" stroke-dasharray="14 10" />
     <path d="M 360 230 h 120 M 368 230 v 22 M 472 230 v 22 M 356 222 h 128" />
-    ${person(420, 220, 1)}
-    <rect x="330" y="140" width="40" height="22" rx="4" /><text x="336" y="155" font-size="9" fill="currentColor" stroke="none" font-family="IBM Plex Mono, monospace">next: 2m</text>
+    ${commuter(268, 262, 1.25)}
+    <rect x="330" y="140" width="56" height="22" rx="4" /><text x="336" y="155" font-size="9" fill="currentColor" stroke="none" font-family="IBM Plex Mono, monospace">next: 2m</text>
     <path d="M 150 252 l 0 -30 M 146 222 h 8" /><circle cx="150" cy="214" r="8" />
   `, "A metro platform with a sign pointing towards work");
 
