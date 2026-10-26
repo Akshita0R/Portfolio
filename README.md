@@ -5,7 +5,7 @@ Cobalt blue, hand-drawn line art and a metro line for a menu. Product-manager ca
 Live: https://akshita-r-portfolio.netlify.app
 
 ## Structure
-- `site/index.html`: home (click-to-stamp ticket, platform, train windows), Selected Work, About, Play (doodle pad), contact
+- `site/index.html`: home (click-to-stamp ticket, platform, train windows), Projects, Work, About, Play (doodle pad), contact
 - `site/case.html?id=…`: case study with section rail (Problem → … → Reflection)
 - `site/assets/content.js`: **all text and project data. Edit this file to update the site.**
 - `site/assets/art.js`: the line-art illustrations, drawn as SVG

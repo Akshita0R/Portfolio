@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
-  <a class="skip" href="#work">Skip to work</a>
+  <a class="skip" href="#projects">Skip to projects</a>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" /><feDisplacementMap in="SourceGraphic" scale="2.4" /></filter>
   </svg>
@@ -45,10 +45,21 @@
               <ellipse cx="30" cy="66" rx="26" ry="15" transform="rotate(-45 30 66)" fill="#a52b1f" />
             </g></svg>
           </div>
-          <p class="ticket-panel__after">Validated. <a href="#work">Next stop: work ↓</a></p>
+          <p class="ticket-panel__after">Validated. <a href="#projects">Next stop: projects ↓</a></p>
         </div>
         <div class="panel panel--platform" data-art="platform"></div>
         <div class="panel panel--wide" data-art="train"><span class="panel__caption">Inside the metro · Projects carriage + Work carriage · click a window to jump to it</span></div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section" data-stop="projects">
+      <div class="work">
+        <div class="work__head">
+          <p class="kicker">Stop 02</p>
+          <h2>Selected<br />Projects.</h2>
+        </div>
+        <div class="cards" data-cards></div>
       </div>
     </section>
 
@@ -56,15 +67,10 @@
     <section id="work" class="section" data-stop="work">
       <div class="work">
         <div class="work__head">
-          <p class="kicker">Stop 02</p>
-          <h2>Selected<br />Work.</h2>
+          <p class="kicker">Stop 03</p>
+          <h2>Work<br />Experience.</h2>
         </div>
-        <div>
-          <p class="kicker">Projects</p>
-          <div class="cards" data-cards></div>
-          <p class="kicker work__sub">Work · roles I've held</p>
-          <div class="cards cards--roles" data-roles-cards></div>
-        </div>
+        <div class="cards cards--roles" data-roles-cards></div>
       </div>
     </section>
 
@@ -72,11 +78,11 @@
     <section id="about" class="section" data-stop="about">
       <div class="about">
         <div class="about__text reveal">
-          <p class="kicker">Stop 03 · About</p>
+          <p class="kicker">Stop 04 · About</p>
           <h2 data-about-title></h2>
           <div data-about-body></div>
           <div class="about__links mono">
-            <a href="#work">See how I make product calls →</a>
+            <a href="#projects">See how I make product calls →</a>
             <a data-resume-link target="_blank" rel="noopener">Read the full résumé ↗</a>
           </div>
           <p class="kicker">Experience · community</p>

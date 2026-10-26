@@ -4,7 +4,7 @@
 window.Shell = (() => {
   const P = window.PORTFOLIO;
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const STOPS = ["home", "work", "about", "play"];
+  const STOPS = ["home", "projects", "work", "about", "play"];
 
   function render({ base = "", current = null } = {}) {
     document.querySelector("[data-side]").innerHTML = `

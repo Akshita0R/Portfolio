@@ -120,9 +120,10 @@ main { margin-left: var(--side); padding: 76px var(--gutter) 0; }
 @media (max-width: 820px) { .panels { grid-template-columns: 1fr; } }
 
 /* work */
-.work { display: grid; grid-template-columns: 150px 1fr; gap: clamp(16px, 3vw, 36px); }
+.work { display: grid; grid-template-columns: 210px 1fr; gap: clamp(16px, 3vw, 36px); }
 .work__head h2, .about h2, .play h2 { font-size: clamp(34px, 4vw, 48px); }
 .work__head { position: sticky; top: 80px; align-self: start; }
+.work__head h2 { font-size: clamp(32px, 3vw, 42px); }
 .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .card { position: relative; display: block; text-decoration: none; min-height: 300px; overflow: hidden; border: 1px solid var(--panel); border-radius: 2px; }
 .card { background: var(--panel); color: var(--blue); }
