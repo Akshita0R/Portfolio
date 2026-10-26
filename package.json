@@ -1,5 +1,7 @@
 {
   "name": "postmarked-portfolio",
+  "description": "Akshita R's product portfolio: case studies in a hand-drawn metro theme",
+  "homepage": "https://akshita-r-portfolio.netlify.app",
   "private": true,
   "type": "module",
   "scripts": {
