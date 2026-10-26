@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Postmaster's Ledger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,400;9..144,800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    .ledger { max-width: 1000px; margin: 0 auto; padding: 48px var(--gutter) 80px; }
+    .ledger h1 { font-size: clamp(40px, 7vw, 72px); margin: 8px 0 28px; }
+    .ledger__bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-bottom: 32px; }
+    .ledger__bar input, .ledger__bar select { font: inherit; font-family: var(--mono); font-size: 14px; padding: 10px 12px; background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+    .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .tile { background: var(--card); box-shadow: var(--shadow); padding: 16px 18px; border-top: 3px solid var(--red); }
+    .tile b { display: block; font-size: 36px; font-weight: 800; line-height: 1.1; }
+    .books { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px; }
+    .book { background: var(--card); box-shadow: var(--shadow); padding: 18px 20px; }
+    .book h2 { font-size: 22px; margin-bottom: 10px; }
+    .book table { width: 100%; border-collapse: collapse; font-size: 15px; }
+    .book td { padding: 6px 0; border-bottom: 1px dashed var(--line); }
+    .book td:last-child { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    .book .empty { color: var(--ink-faint); font-style: italic; }
+    .msg { font-family: var(--mono); font-size: 13px; color: var(--red); }
+  </style>
+</head>
+<body>
+  <main class="ledger">
+    <p class="mono kicker"><a href="./">← Back to the envelope</a></p>
+    <h1>Postmaster's Ledger</h1>
+    <form class="ledger__bar" data-form>
+      <label class="field"><span class="mono">Access token</span><input type="password" name="token" required autocomplete="current-password" /></label>
+      <label class="field"><span class="mono">Period</span>
+        <select name="days"><option value="7">7 days</option><option value="30" selected>30 days</option><option value="90">90 days</option></select>
+      </label>
+      <button class="btn" type="submit">Open ledger</button>
+      <span class="msg" data-msg role="status"></span>
+    </form>
+    <section class="tiles" data-tiles></section>
+    <section class="books" data-books></section>
+  </main>
+  <script>
+    (() => {
+      const form = document.querySelector("[data-form]");
+      const msg = document.querySelector("[data-msg]");
+      const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+      try { form.token.value = localStorage.getItem("ledger-token") || ""; } catch {}
+
+      const book = (title, rows) => `<div class="book"><h2>${title}</h2><table>${
+        rows.length ? rows.map(([k, v]) => `<tr><td>${esc(k)}</td><td>${v}</td></tr>`).join("") : `<tr><td class="empty">Nothing yet</td></tr>`
+      }</table></div>`;
+
+      async function load() {
+        msg.textContent = "Fetching…";
+        try {
+          const res = await fetch(`/api/stats?days=${form.days.value}`, { headers: { authorization: `Bearer ${form.token.value}` } });
+          const data = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+          if (!res.ok) throw new Error(data.error || res.status);
+          try { localStorage.setItem("ledger-token", form.token.value); } catch {}
+          msg.textContent = "";
+          const t = data.totals;
+          const tiles = [
+            ["Page views", t.pageview || 0], ["Visitor-days", t.visitors || 0], ["Envelopes opened", t.envelope || 0],
+            ["Catalogue views", t.project || 0], ["Résumé downloads", t.resume || 0], ["Postcards", t.postcard || 0],
+          ];
+          document.querySelector("[data-tiles]").innerHTML = tiles.map(([k, v]) => `<div class="tile"><span class="mono">${k}</span><b>${v}</b></div>`).join("");
+          const days = Object.entries(data.daily).reverse().filter(([, d]) => d.views).map(([d, v]) => [d, `${v.views} views · ${v.visitors} visitors`]);
+          document.querySelector("[data-books]").innerHTML = [
+            book("Where they came from", data.sources), book("Stamps examined", data.projects),
+            book("Sections reached", data.sections), book("Links followed", data.links),
+            book("Countries", data.countries), book("Devices", data.devices), book("Day by day", days),
+          ].join("");
+        } catch (e) {
+          msg.textContent = `Couldn't open the ledger: ${e.message}`;
+        }
+      }
+      form.addEventListener("submit", (e) => (e.preventDefault(), load()));
+      if (form.token.value) load();
+    })();
+  </script>
+</body>
+</html>
