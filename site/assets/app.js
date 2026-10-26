@@ -60,9 +60,24 @@
     plat.classList.toggle("is-near", near);
   });
   plat.addEventListener("pointerleave", () => plat.classList.remove("is-chatting", "is-near", "has-dot"));
-  $('[data-art="train"]').insertAdjacentHTML("beforeend", Art.train(
-    projects.map((p) => ({ title: p.short || p.title, scene: p.scene, href: caseUrl(p) }))
-  ));
+  const win = (p) => ({ title: p.short || p.title, scene: p.scene, href: `#card-${p.id}` });
+  $('[data-art="train"]').insertAdjacentHTML("beforeend", Art.train([
+    { label: "PROJECTS", items: projects.map(win) },
+    { label: "WORK", items: roles.map(win) },
+  ]));
+  // A window click scrolls down to its card and highlights it.
+  $('[data-art="train"]').addEventListener("click", (e) => {
+    const a = e.target.closest("a[href^='#card-']");
+    if (!a) return;
+    e.preventDefault();
+    const card = document.getElementById(a.getAttribute("href").slice(1));
+    card.classList.add("is-in");
+    card.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+    card.classList.remove("is-flash");
+    void card.offsetWidth;
+    card.classList.add("is-flash");
+    track("section", "train-" + card.dataset.case);
+  });
 
   const ticket = $("[data-ticket]");
   $("[data-stamp]").innerHTML = `Validated<br>${today.slice(0, 6)}<br>${time}`;
@@ -137,7 +152,7 @@
   if (new URLSearchParams(location.search).get("mode") === "recruiter") setRecruiter(true, false);
 
   // Work cards
-  const card = (p) => `<a class="card reveal${p.wide ? " card--wide" : ""}" href="${caseUrl(p)}" data-case="${esc(p.id)}">
+  const card = (p) => `<a class="card reveal${p.wide ? " card--wide" : ""}" id="card-${esc(p.id)}" href="${caseUrl(p)}" data-case="${esc(p.id)}">
       <div class="card__art">${Art.scene(p.scene)}</div>
       <span class="card__more">View case study →</span>
       <div class="card__info" aria-hidden="true">${esc(p.intro.split(". ")[0])}.

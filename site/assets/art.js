@@ -56,31 +56,45 @@ window.Art = (() => {
   };
 
   // Home panel: inside a metro coach. Each window is a project you can open.
-  const train = (windows) => {
-    const W = 1000, ww = 220, wh = 128, wy = 50, n = windows.length;
-    const gap = (W - n * ww) / (n + 1);
-    const xs = windows.map((_, i) => gap + i * (ww + gap));
-    const wins = windows.map((w, i) => {
-      const x = xs[i], cx = x + ww / 2;
-      return `<a href="${w.href}" class="art__link" aria-label="Open the ${w.title} case study">
-        <rect x="${x}" y="${wy}" width="${ww}" height="${wh}" rx="12" fill="var(--panel)" />
-        <rect x="${x + 8}" y="${wy + 8}" width="${ww - 16}" height="${wh - 16}" rx="8" />
-        <g transform="translate(${cx} ${wy + 34})">${icons[w.scene] || ""}</g>
-        <text x="${cx}" y="${wy + 76}" text-anchor="middle" font-size="17" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">${w.title}</text>
-        <rect x="${cx - 32}" y="${wy + 88}" width="64" height="20" rx="10" />
-        <text x="${cx}" y="${wy + 102}" text-anchor="middle" font-size="9.5" fill="currentColor" stroke="none" font-family="IBM Plex Mono, monospace" letter-spacing="1">OPEN →</text>
-      </a>`;
-    }).join("");
-    const poles = [gap / 2, ...xs.map((x) => x + ww + gap / 2)];
+  // `groups`: [{ label, items: [{ title, scene, href }] }], one carriage per group.
+  const train = (groups) => {
+    const ww = 190, wh = 124, wy = 76, gap = 28, edge = 40, gangway = 90;
+    let x = edge;
+    const parts = [], poles = [edge / 2];
+    groups.forEach((g, gi) => {
+      const start = x;
+      g.items.forEach((w, i) => {
+        const cx = x + ww / 2;
+        parts.push(`<a href="${w.href}" class="art__link" aria-label="Go to ${w.title}">
+          <rect x="${x}" y="${wy}" width="${ww}" height="${wh}" rx="12" fill="var(--panel)" />
+          <rect x="${x + 8}" y="${wy + 8}" width="${ww - 16}" height="${wh - 16}" rx="8" />
+          <g transform="translate(${cx} ${wy + 33})">${icons[w.scene] || ""}</g>
+          <text x="${cx}" y="${wy + 74}" text-anchor="middle" font-size="17" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">${w.title}</text>
+          <rect x="${cx - 30}" y="${wy + 86}" width="60" height="20" rx="10" />
+          <text x="${cx}" y="${wy + 100}" text-anchor="middle" font-size="9.5" fill="currentColor" stroke="none" font-family="IBM Plex Mono, monospace" letter-spacing="1">VIEW ↓</text>
+        </a>`);
+        x += ww;
+        if (i < g.items.length - 1) { poles.push(x + gap / 2); x += gap; }
+      });
+      const mid = (start + x) / 2, sw = 150;
+      parts.push(`<path d="M ${mid - 40} 30 v 12 M ${mid + 40} 30 v 12" /><rect x="${mid - sw / 2}" y="42" width="${sw}" height="24" rx="3" fill="currentColor" />
+        <text x="${mid}" y="59" text-anchor="middle" font-size="12" letter-spacing="3" fill="var(--panel)" stroke="none" font-family="IBM Plex Mono, monospace">${g.label} →</text>`);
+      if (gi < groups.length - 1) {
+        const gx = x + gangway / 2;
+        parts.push(`<path d="M ${x + 14} 30 V 290 M ${x + gangway - 14} 30 V 290" stroke-width="3" />
+          <path d="M ${x + 24} 60 ${lines(9, (k) => `L ${k % 2 ? gx + 14 : gx - 14} ${84 + k * 22}`)}" stroke-width="1.4" />`);
+        x += gangway;
+      } else poles.push(x + edge / 2);
+    });
+    const W = x + edge;
     return svg(`0 0 ${W} 300`, `
       <path d="M 0 20 H ${W} M 0 30 H ${W}" />
-      ${lines(9, (i) => `<path d="M ${40 + i * 115} 30 v 10 a 6 6 0 1 0 0.1 0" />`)}
-      ${poles.map((x) => `<path d="M ${x} 30 V 290" stroke-width="3" />`).join("")}
-      ${wins}
-      <path d="M 30 206 h 940 a 20 20 0 0 1 0 40 h -940 a 20 20 0 0 1 0 -40 Z" />
-      ${lines(10, (i) => `<path d="M ${100 + i * 90} 208 q 6 18 0 36" stroke-width="1.2" />`)}
-      <path d="M 0 290 H ${W}" /><path d="M 0 262 H ${W}" stroke-dasharray="3 9" />
-    `, "Inside a metro coach; each window is a project you can open");
+      ${poles.map((p) => `<path d="M ${p} 30 V 290" stroke-width="3" />`).join("")}
+      ${parts.join("")}
+      <path d="M 20 214 h ${W - 40} a 18 18 0 0 1 0 36 h -${W - 40} a 18 18 0 0 1 0 -36 Z" />
+      ${lines(Math.floor(W / 100), (i) => `<path d="M ${80 + i * 100} 216 q 6 16 0 32" stroke-width="1.2" />`)}
+      <path d="M 0 290 H ${W}" /><path d="M 0 266 H ${W}" stroke-dasharray="3 9" />
+    `, "Inside the metro: a Projects carriage and a Work carriage; each window jumps to that item");
   };
 
   // Project scenes ----------------------------------------------------------

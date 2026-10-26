@@ -151,6 +151,9 @@ main { margin-left: var(--side); padding: 76px var(--gutter) 0; }
 @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } .card__info { display: none; } }
 
 .work__sub { margin-top: 44px; }
+.card { scroll-margin-top: 90px; }
+.card.is-flash { animation: flash 1.6s ease; }
+@keyframes flash { 0%, 60% { box-shadow: 0 0 0 4px var(--white), 0 0 0 9px rgba(247, 248, 255, .35); } 100% { box-shadow: 0 0 0 0 transparent; } }
 .cards--roles .card { min-height: 240px; }
 
 /* about */
