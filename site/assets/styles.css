@@ -51,7 +51,19 @@ img, svg { display: block; max-width: 100%; }
 .side__meta dt { font-weight: 500; letter-spacing: .14em; text-transform: uppercase; font-size: 10.5px; }
 .side__meta dd { margin: 0; color: var(--soft); }
 .side__foot { margin-top: auto; display: grid; gap: 14px; }
-.side__train { width: 150px; color: var(--soft); }
+.side__train { width: 176px; color: var(--white); }
+/* Walking commuter: legs and arms swing, the city scrolls behind. */
+.walker__city { animation: city 14s linear infinite; }
+.walker__road { animation: road .9s linear infinite; }
+@keyframes city { to { transform: translateX(-200px); } }
+@keyframes road { to { stroke-dashoffset: 8; } }
+.walker__leg, .walker__arm { transform-box: fill-box; transform-origin: 50% 0; animation: swing .9s ease-in-out infinite alternate; }
+.walker__leg--b, .walker__arm--f { animation-delay: -.9s; }
+.walker__arm { animation-name: swing-arm; }
+@keyframes swing { from { transform: rotate(24deg); } to { transform: rotate(-24deg); } }
+@keyframes swing-arm { from { transform: rotate(-20deg); } to { transform: rotate(20deg); } }
+.walker__bob { animation: bob .45s ease-in-out infinite alternate; }
+@keyframes bob { to { transform: translateY(-1.5px); } }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;
   font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; text-decoration: none;

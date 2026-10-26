@@ -15,7 +15,7 @@ window.Shell = (() => {
         ${[P.now, P.prev, P.next].map((m) => `<div><dt>${esc(m.label)}</dt><dd>${esc(m.text)}</dd></div>`).join("")}
       </dl>
       <div class="side__foot">
-        <div class="side__train">${Art.miniTrain()}</div>
+        <div class="side__train">${Art.walker()}</div>
         <button class="btn" type="button" data-recruiter aria-pressed="false">Recruiter mode</button>
         <a class="side__pdf" href="${esc(P.resumeUrl)}" target="_blank" rel="noopener" data-resume>Résumé PDF ↗</a>
       </div>`;

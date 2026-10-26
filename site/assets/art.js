@@ -203,11 +203,40 @@ window.Art = (() => {
     <path d="M 0 64 H 200" stroke-dasharray="4 6" />
   `);
 
+  // Sidebar: a commuter walking on the spot while the city slides past behind her.
+  const walker = () => {
+    const city = (dx) => `<g transform="translate(${dx} 0)">
+      <path d="M 0 96 V 70 h 14 V 58 h 16 V 96 M 34 96 V 48 h 18 V 96 M 40 56 h 6 M 40 66 h 6 M 40 76 h 6" />
+      <path d="M 58 96 V 74 h 10 V 66 a 9 9 0 0 1 18 0 V 74 h 10 V 96 M 77 57 v -5" />
+      <path d="M 104 96 V 62 h 22 V 96 M 109 70 h 4 M 117 70 h 4 M 109 80 h 4 M 117 80 h 4" />
+      <path d="M 130 96 V 76 l 10 -8 l 10 8 V 96" /><path d="M 160 96 V 84 c -8 -2 -8 -14 0 -16 c 8 2 8 14 0 16" />
+      <path d="M 0 52 H 200" stroke-width="1.6" />${lines(5, (i) => `<path d="M ${20 + i * 40} 52 V 96" stroke-width="1.6" />`)}
+    </g>`;
+    return `<svg viewBox="0 0 200 112" class="art walker" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <g class="walker__city" opacity=".55">${city(0)}${city(200)}</g>
+      <path d="M 0 104 H 200" stroke-dasharray="3 5" class="walker__road" />
+      <g class="walker__me" transform="translate(100 102)" stroke-width="1.6">
+        <g class="walker__bob">
+          <g class="walker__leg walker__leg--b"><path d="M -1 -30 L -2 -2" /><path d="M -5 0 h 7" stroke-width="2.6" /></g>
+          <g class="walker__arm walker__arm--b"><path d="M 0 -50 L -1 -34" /></g>
+          <path d="M -9 -52 C -11 -42 -11 -34 -10 -28 L 9 -28 C 10 -36 9 -44 7 -52 Q 0 -56 -9 -52 Z" fill="var(--blue)" />
+          <path d="M 8 -44 l 8 2 l -2 12 l -8 -2 Z" fill="var(--blue)" /><path d="M 6 -50 L 10 -43" />
+          <g class="walker__leg walker__leg--f"><path d="M 1 -30 L 2 -2" /><path d="M -2 0 h 7" stroke-width="2.6" /></g>
+          <g class="walker__arm walker__arm--f"><path d="M 1 -50 L 2 -34" /></g>
+          <circle cx="1" cy="-61" r="8" fill="var(--blue)" />
+          <path d="M -7 -60 C -8 -70 4 -73 8 -64 C 4 -66 0 -65 -2 -60 Z" fill="currentColor" />
+          <path d="M -6 -63 C -12 -62 -13 -54 -10 -50" stroke-width="2.4" />
+          <circle cx="4.5" cy="-60" r=".9" fill="currentColor" stroke="none" />
+        </g>
+      </g>
+    </svg>`;
+  };
+
   const avatar = (initials) => svg("0 0 60 60", `
     <circle cx="30" cy="30" r="27" />
     <text x="30" y="37" text-anchor="middle" font-size="19" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">${initials}</text>
   `);
 
   const scenes = { pharmacy, dashboard, server, parking, funnel };
-  return { platform, train, station, construction, miniTrain, avatar, scene: (k) => (scenes[k] || dashboard)() };
+  return { platform, train, station, construction, miniTrain, walker, avatar, scene: (k) => (scenes[k] || dashboard)() };
 })();
