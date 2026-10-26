@@ -46,22 +46,25 @@ window.Art = (() => {
 
   // Home panel: inside a metro coach. Each window is a project you can open.
   const train = (windows) => {
-    const W = 1000, wy = 50, ww = 150, wh = 128;
+    const W = 1000, ww = 220, wh = 128, wy = 50, n = windows.length;
+    const gap = (W - n * ww) / (n + 1);
+    const xs = windows.map((_, i) => gap + i * (ww + gap));
     const wins = windows.map((w, i) => {
-      const x = 60 + i * 180, cx = x + ww / 2;
+      const x = xs[i], cx = x + ww / 2;
       return `<a href="${w.href}" class="art__link" aria-label="Open the ${w.title} case study">
         <rect x="${x}" y="${wy}" width="${ww}" height="${wh}" rx="12" fill="var(--panel)" />
         <rect x="${x + 8}" y="${wy + 8}" width="${ww - 16}" height="${wh - 16}" rx="8" />
         <g transform="translate(${cx} ${wy + 34})">${icons[w.scene] || ""}</g>
-        <text x="${cx}" y="${wy + 76}" text-anchor="middle" font-size="16" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">${w.title}</text>
+        <text x="${cx}" y="${wy + 76}" text-anchor="middle" font-size="17" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">${w.title}</text>
         <rect x="${cx - 32}" y="${wy + 88}" width="64" height="20" rx="10" />
         <text x="${cx}" y="${wy + 102}" text-anchor="middle" font-size="9.5" fill="currentColor" stroke="none" font-family="IBM Plex Mono, monospace" letter-spacing="1">OPEN →</text>
       </a>`;
     }).join("");
+    const poles = [gap / 2, ...xs.map((x) => x + ww + gap / 2)];
     return svg(`0 0 ${W} 300`, `
       <path d="M 0 20 H ${W} M 0 30 H ${W}" />
       ${lines(9, (i) => `<path d="M ${40 + i * 115} 30 v 10 a 6 6 0 1 0 0.1 0" />`)}
-      ${[30, 225, 405, 585, 765, 970].map((x) => `<path d="M ${x} 30 V 290" stroke-width="3" />`).join("")}
+      ${poles.map((x) => `<path d="M ${x} 30 V 290" stroke-width="3" />`).join("")}
       ${wins}
       <path d="M 30 206 h 940 a 20 20 0 0 1 0 40 h -940 a 20 20 0 0 1 0 -40 Z" />
       ${lines(10, (i) => `<path d="M ${100 + i * 90} 208 q 6 18 0 36" stroke-width="1.2" />`)}
@@ -127,7 +130,7 @@ window.Art = (() => {
     ${lines(6, (i) => `<path d="M ${50 + i * 63} 60 v 70 M ${50 + i * 63} 350 v -70" />`)}
     ${[0, 2, 3, 5].map((i) => `<rect x="${64 + i * 63}" y="72" width="36" height="52" rx="10" /><path d="M ${70 + i * 63} 90 h 24 M ${70 + i * 63} 108 h 24" />`).join("")}
     ${[1, 2, 4].map((i) => `<rect x="${64 + i * 63}" y="288" width="36" height="52" rx="10" /><path d="M ${70 + i * 63} 306 h 24 M ${70 + i * 63} 324 h 24" />`).join("")}
-    <path d="M 500 360 V 120" stroke-width="3" /><rect x="470" y="70" width="60" height="60" rx="8" />
+    <path d="M 500 186 V 130" stroke-width="3" /><rect x="470" y="70" width="60" height="60" rx="8" />
     <text x="487" y="114" font-size="38" font-weight="700" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">P</text>
     <path d="M 270 150 c -16 0 -26 12 -26 24 c 0 16 26 42 26 42 c 0 0 26 -26 26 -42 c 0 -12 -10 -24 -26 -24 Z" /><circle cx="270" cy="174" r="8" />
     <rect x="450" y="190" width="110" height="80" rx="6" />

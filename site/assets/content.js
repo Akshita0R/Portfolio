@@ -90,8 +90,9 @@ window.PORTFOLIO = {
     },
     {
       id: "kpi-dashboards",
-      short: "CSG KPIs",
-      title: "Product KPIs at CSG",
+      type: "experience",
+      short: "CSG",
+      title: "Data Analyst at CSG",
       label: "15+ product KPIs across 10+ dashboards",
       scene: "dashboard",
       year: "2025",
@@ -110,8 +111,9 @@ window.PORTFOLIO = {
     },
     {
       id: "fintech-backend",
+      type: "experience",
       short: "Volopay",
-      title: "Product Backend at Volopay",
+      title: "Backend Engineer at Volopay",
       label: "From user-behaviour data to sprint priorities",
       scene: "server",
       year: "2024",

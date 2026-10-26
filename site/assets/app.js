@@ -22,10 +22,13 @@
   fill("[data-name]", P.name);
   fill("[data-year]", now.getFullYear());
 
+  const projects = P.projects.filter((p) => p.type !== "experience");
+  const roles = P.projects.filter((p) => p.type === "experience");
+
   // Home panels
   $('[data-art="platform"]').innerHTML = Art.platform();
   $('[data-art="train"]').insertAdjacentHTML("beforeend", Art.train(
-    P.projects.map((p) => ({ title: p.short || p.title, scene: p.scene, href: caseUrl(p) }))
+    projects.map((p) => ({ title: p.short || p.title, scene: p.scene, href: caseUrl(p) }))
   ));
 
   const ticket = $("[data-ticket]");
@@ -74,7 +77,7 @@
     ${P.experience.map((x) => `<div class="rrow"><div><h3>${esc(x.org)}</h3><div class="rrow__role">${esc(x.role)}</div></div><div class="rrow__when">${esc(x.when)}<br>${esc(x.where)}</div>
       <ul>${x.points.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>`).join("")}
     <h2>Projects</h2>
-    ${P.projects.filter((p) => !/ at /.test(p.title)).map((p) => `<div class="rrow"><div><h3>${esc(p.title)}</h3><div class="rrow__role">${esc(p.label)} · ${esc(p.tools)}</div></div><div class="rrow__when">${esc(p.year)}<br><a href="${caseUrl(p)}">Case study →</a></div></div>`).join("")}
+    ${projects.map((p) => `<div class="rrow"><div><h3>${esc(p.title)}</h3><div class="rrow__role">${esc(p.label)} · ${esc(p.tools)}</div></div><div class="rrow__when">${esc(p.year)}<br><a href="${caseUrl(p)}">Case study →</a></div></div>`).join("")}
     <h2>Education</h2>
     ${P.education.map((x) => `<div class="rrow"><div><h3>${esc(x.org)}</h3><div class="rrow__role">${esc(x.role)}</div></div><div class="rrow__when">${esc(x.when)}</div></div>`).join("")}
     <h2>Skills</h2>
@@ -101,20 +104,20 @@
   if (new URLSearchParams(location.search).get("mode") === "recruiter") setRecruiter(true, false);
 
   // Work cards
-  $("[data-cards]").innerHTML = P.projects
-    .map((p) => `<a class="card reveal${p.wide ? " card--wide" : ""}" href="${caseUrl(p)}" data-case="${esc(p.id)}">
+  const card = (p) => `<a class="card reveal${p.wide ? " card--wide" : ""}" href="${caseUrl(p)}" data-case="${esc(p.id)}">
       <div class="card__art">${Art.scene(p.scene)}</div>
       <span class="card__more">View case study →</span>
       <div class="card__info" aria-hidden="true">${esc(p.intro.split(". ")[0])}.
         <dl><dt>Role</dt><dd>${esc(p.role)}</dd><dt>Team</dt><dd>${esc(p.team)}</dd><dt>When</dt><dd>${esc(p.timeline)}</dd></dl>
       </div>
       <span class="card__label">${esc(p.label)}<small>${esc(p.title)} · ${esc(p.year)}</small></span>
-    </a>`)
-    .join("");
-  $("[data-cards]").addEventListener("click", (e) => {
+    </a>`;
+  $("[data-cards]").innerHTML = projects.map(card).join("");
+  $("[data-roles-cards]").innerHTML = roles.map(card).join("");
+  $$(".cards").forEach((el) => el.addEventListener("click", (e) => {
     const c = e.target.closest("[data-case]");
     if (c) track("project", c.dataset.case);
-  });
+  }));
 
   // About
   $("[data-about-title]").textContent = P.about.title;

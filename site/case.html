@@ -38,7 +38,8 @@
       const id = new URLSearchParams(location.search).get("id");
       const i = Math.max(0, P.projects.findIndex((p) => p.id === id));
       const p = P.projects[i];
-      const next = P.projects[(i + 1) % P.projects.length];
+      const group = P.projects.filter((x) => (x.type || "project") === (p.type || "project"));
+      const next = group[(group.indexOf(p) + 1) % group.length];
       document.title = `${p.title} — ${P.name}`;
       document.querySelectorAll("[data-name]").forEach((el) => (el.textContent = P.name));
       document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
@@ -50,7 +51,7 @@
           <ol>${p.sections.map((s, n) => `<li><a href="#${sid(n)}" data-rail="${sid(n)}">${esc(s.tag)}</a></li>`).join("")}</ol>
         </nav>
         <div>
-          <p class="kicker"><a href="./#work">← All work</a></p>
+          <p class="kicker"><a href="./#work">← All work</a> · ${p.type === "experience" ? "Experience" : "Project"}</p>
           <dl class="case__facts">
             <div><dt>Role</dt><dd>${esc(p.role)}</dd></div>
             <div><dt>Timeline</dt><dd>${esc(p.timeline)}</dd></div>
@@ -70,7 +71,7 @@
               ${s.stats ? `<div class="stats">${s.stats.map((x) => `<div><b>${esc(x.v)}</b><span>${esc(x.l)}</span></div>`).join("")}</div>` : ""}
             </section>`).join("")}
         </div>`;
-      document.querySelector("[data-next]").innerHTML = `<a href="./#work">← All work</a><a href="case.html?id=${encodeURIComponent(next.id)}">Next project: ${esc(next.title)} →</a>`;
+      document.querySelector("[data-next]").innerHTML = `<a href="./#work">← All work</a><a href="case.html?id=${encodeURIComponent(next.id)}">Next ${p.type === "experience" ? "role" : "project"}: ${esc(next.title)} →</a>`;
 
       document.addEventListener("click", (e) => {
         const out = e.target.closest("[data-out]");
