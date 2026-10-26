@@ -35,26 +35,38 @@ window.Art = (() => {
   `, "A metro platform with a sign pointing towards work");
 
   // Home panel: inside a metro coach. Each window is a project link.
+  // Tiny icons shown inside the train windows (centred on 0,0, about 30px).
+  const icons = {
+    pharmacy: `<rect x="-14" y="-14" width="28" height="28" rx="5" /><path d="M -4 -9 h 8 v 5 h 5 v 8 h -5 v 5 h -8 v -5 h -5 v -8 h 5 Z" />`,
+    dashboard: `<path d="M -16 12 H 16" /><rect x="-12" y="0" width="5" height="12" /><rect x="-3" y="-8" width="5" height="20" /><rect x="6" y="-14" width="5" height="26" />`,
+    server: `<rect x="-12" y="-15" width="24" height="30" rx="3" /><path d="M -12 -5 H 12 M -12 5 H 12" /><circle cx="-6" cy="-10" r="1.6" fill="currentColor" /><circle cx="-6" cy="0" r="1.6" fill="currentColor" /><circle cx="-6" cy="10" r="1.6" fill="currentColor" />`,
+    parking: `<rect x="-14" y="-14" width="28" height="28" rx="5" /><text x="0" y="8" text-anchor="middle" font-size="22" font-weight="700" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">P</text>`,
+    funnel: `<path d="M -16 -12 H 16 L 4 2 V 14 H -4 V 2 Z" /><path d="M -10 -5 H 10" />`,
+  };
+
+  // Home panel: inside a metro coach. Each window is a project you can open.
   const train = (windows) => {
-    const W = 1000, wy = 52, ww = 150, wh = 96;
+    const W = 1000, wy = 50, ww = 150, wh = 128;
     const wins = windows.map((w, i) => {
-      const x = 60 + i * 180;
-      return `<a href="${w.href}" class="art__link" aria-label="${w.title}">
-        <rect x="${x}" y="${wy}" width="${ww}" height="${wh}" rx="10" fill="var(--panel)" />
-        <rect x="${x + 8}" y="${wy + 8}" width="${ww - 16}" height="${wh - 16}" rx="6" />
-        <text x="${x + ww / 2}" y="${wy + 44}" text-anchor="middle" font-size="15" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">${w.title}</text>
-        <text x="${x + ww / 2}" y="${wy + 64}" text-anchor="middle" font-size="9" fill="currentColor" stroke="none" font-family="IBM Plex Mono, monospace" letter-spacing="1">${w.sub}</text>
+      const x = 60 + i * 180, cx = x + ww / 2;
+      return `<a href="${w.href}" class="art__link" aria-label="Open the ${w.title} case study">
+        <rect x="${x}" y="${wy}" width="${ww}" height="${wh}" rx="12" fill="var(--panel)" />
+        <rect x="${x + 8}" y="${wy + 8}" width="${ww - 16}" height="${wh - 16}" rx="8" />
+        <g transform="translate(${cx} ${wy + 34})">${icons[w.scene] || ""}</g>
+        <text x="${cx}" y="${wy + 76}" text-anchor="middle" font-size="16" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">${w.title}</text>
+        <rect x="${cx - 32}" y="${wy + 88}" width="64" height="20" rx="10" />
+        <text x="${cx}" y="${wy + 102}" text-anchor="middle" font-size="9.5" fill="currentColor" stroke="none" font-family="IBM Plex Mono, monospace" letter-spacing="1">OPEN →</text>
       </a>`;
     }).join("");
     return svg(`0 0 ${W} 300`, `
       <path d="M 0 20 H ${W} M 0 30 H ${W}" />
-      ${lines(9, (i) => `<path d="M ${40 + i * 115} 30 v 14 a 6 6 0 1 0 0.1 0" />`)}
-      ${wins}
+      ${lines(9, (i) => `<path d="M ${40 + i * 115} 30 v 10 a 6 6 0 1 0 0.1 0" />`)}
       ${[30, 225, 405, 585, 765, 970].map((x) => `<path d="M ${x} 30 V 290" stroke-width="3" />`).join("")}
-      <path d="M 30 196 h 940 a 22 22 0 0 1 0 44 h -940 a 22 22 0 0 1 0 -44 Z" />
-      ${lines(10, (i) => `<path d="M ${100 + i * 90} 198 q 6 20 0 40" stroke-width="1.2" />`)}
-      <path d="M 0 290 H ${W}" /><path d="M 0 248 H ${W}" stroke-dasharray="3 9" />
-    `, "Inside a metro coach; each window is a project");
+      ${wins}
+      <path d="M 30 206 h 940 a 20 20 0 0 1 0 40 h -940 a 20 20 0 0 1 0 -40 Z" />
+      ${lines(10, (i) => `<path d="M ${100 + i * 90} 208 q 6 18 0 36" stroke-width="1.2" />`)}
+      <path d="M 0 290 H ${W}" /><path d="M 0 262 H ${W}" stroke-dasharray="3 9" />
+    `, "Inside a metro coach; each window is a project you can open");
   };
 
   // Project scenes ----------------------------------------------------------

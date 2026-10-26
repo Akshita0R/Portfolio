@@ -25,7 +25,7 @@
   // Home panels
   $('[data-art="platform"]').innerHTML = Art.platform();
   $('[data-art="train"]').insertAdjacentHTML("beforeend", Art.train(
-    P.projects.map((p) => ({ title: p.short || p.title, sub: p.year, href: caseUrl(p) }))
+    P.projects.map((p) => ({ title: p.short || p.title, scene: p.scene, href: caseUrl(p) }))
   ));
 
   const ticket = $("[data-ticket]");
