@@ -152,13 +152,14 @@
   if (new URLSearchParams(location.search).get("mode") === "recruiter") setRecruiter(true, false);
 
   // Work cards
-  const card = (p) => `<a class="card reveal${p.wide ? " card--wide" : ""}" id="card-${esc(p.id)}" href="${caseUrl(p)}" data-case="${esc(p.id)}">
+  const card = (p) => `<a class="card reveal${p.wide ? " card--wide" : ""}" id="card-${esc(p.id)}" href="${caseUrl(p)}" data-case="${esc(p.id)}" data-cursor="${p.type === "experience" ? "View the role" : "View case study"}">
       <div class="card__art">${Art.scene(p.scene)}</div>
       <span class="card__more">View case study →</span>
       <div class="card__info" aria-hidden="true">${esc(p.intro.split(". ")[0])}.
         <dl><dt>Role</dt><dd>${esc(p.role)}</dd><dt>Team</dt><dd>${esc(p.team)}</dd><dt>When</dt><dd>${esc(p.timeline)}</dd></dl>
       </div>
-      <span class="card__label">${esc(p.label)}<small>${esc(p.title)} · ${esc(p.year)}</small></span>
+      <span class="card__label">${esc(p.label)}<small>${esc(p.title)} · ${esc(p.year)}</small>
+        <span class="card__tags">${p.tags.map((t) => `<span>${esc(t)}</span>`).join("")}</span></span>
     </a>`;
   $("[data-cards]").innerHTML = projects.map(card).join("");
   $("[data-roles-cards]").innerHTML = roles.map(card).join("");
@@ -166,6 +167,35 @@
     const c = e.target.closest("[data-case]");
     if (c) track("project", c.dataset.case);
   }));
+
+  // Cards: the pointer becomes a "view case study" pill, and each scene moves with the scroll.
+  const pill = document.createElement("div");
+  pill.className = "pill-cursor";
+  pill.setAttribute("aria-hidden", "true");
+  document.body.appendChild(pill);
+  $$(".card").forEach((c) => {
+    c.addEventListener("pointerenter", (e) => {
+      if (e.pointerType !== "mouse") return;
+      pill.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>${c.dataset.cursor} →`;
+      pill.classList.add("is-on");
+    });
+    c.addEventListener("pointermove", (e) => (pill.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`));
+    c.addEventListener("pointerleave", () => pill.classList.remove("is-on"));
+  });
+  const cards = $$(".card");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let ticking = false;
+  const animateCards = () => {
+    ticking = false;
+    cards.forEach((c) => {
+      const r = c.getBoundingClientRect();
+      // 0 when the card's top meets the bottom of the screen, 1 once it reaches the upper third.
+      const p = still ? 1 : Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * 0.65)));
+      c.style.setProperty("--p", p.toFixed(3));
+    });
+  };
+  addEventListener("scroll", () => ticking || ((ticking = true), requestAnimationFrame(animateCards)), { passive: true });
+  animateCards();
 
   // About
   $("[data-about-title]").textContent = P.about.title;

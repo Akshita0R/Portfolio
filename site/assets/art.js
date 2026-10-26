@@ -113,11 +113,11 @@ window.Art = (() => {
     <rect x="410" y="120" width="120" height="220" rx="18" />
     <path d="M 450 134 h 40" />
     <rect x="426" y="158" width="88" height="22" rx="11" /><circle cx="440" cy="169" r="5" /><path d="M 444 173 l 4 4" />
-    <path d="M 470 200 c -18 0 -28 14 -28 26 c 0 18 28 46 28 46 c 0 0 28 -28 28 -46 c 0 -12 -10 -26 -28 -26 Z" />
-    <circle cx="470" cy="226" r="9" />
+    <g class="mv mv-drop"><path d="M 470 200 c -18 0 -28 14 -28 26 c 0 18 28 46 28 46 c 0 0 28 -28 28 -46 c 0 -12 -10 -26 -28 -26 Z" fill="var(--card-bg, #fbfbf7)" />
+    <circle cx="470" cy="226" r="9" /></g>
     <rect x="430" y="290" width="80" height="26" rx="13" />
     <path d="M 410 300 C 380 320 360 330 330 330" stroke-dasharray="6 7" />
-    ${person(380, 360, 0.95)}
+    <g class="mv mv-walk">${person(380, 360, 0.95)}</g>
   `, "A pharmacy storefront and a phone showing a map pin");
 
   const dashboard = () => svg("0 0 600 400", `
@@ -127,7 +127,7 @@ window.Art = (() => {
     <rect x="150" y="80" width="80" height="44" rx="4" /><text x="162" y="110" font-size="22" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">15+</text>
     <rect x="240" y="80" width="80" height="44" rx="4" /><text x="250" y="110" font-size="22" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">~40%</text>
     <rect x="330" y="80" width="100" height="44" rx="4" /><path d="M 340 112 l 16 -10 14 6 18 -14 16 4 12 -10" />
-    ${lines(7, (i) => `<rect x="${160 + i * 26}" y="${250 - [40, 62, 50, 84, 70, 100, 92][i]}" width="16" height="${[40, 62, 50, 84, 70, 100, 92][i]}" />`)}
+    <g class="mv mv-grow">${lines(7, (i) => `<rect x="${160 + i * 26}" y="${250 - [40, 62, 50, 84, 70, 100, 92][i]}" width="16" height="${[40, 62, 50, 84, 70, 100, 92][i]}" />`)}</g>
     <path d="M 160 250 H 430" />
     <path d="M 355 160 L 430 160 L 430 250 L 355 250 Z" stroke-dasharray="3 5" /><path d="M 362 230 Q 380 170 400 200 T 425 170" />
     <path d="M 470 290 h 36 v 34 a 8 8 0 0 1 -8 8 h -20 a 8 8 0 0 1 -8 -8 Z M 506 298 q 14 2 0 18" />
@@ -139,8 +139,8 @@ window.Art = (() => {
   const server = () => svg("0 0 600 400", `
     <path d="M 40 360 H 560" />
     ${lines(2, (r) => `<rect x="${90 + r * 120}" y="80" width="96" height="280" rx="6" />` + lines(6, (i) => `<rect x="${100 + r * 120}" y="${96 + i * 42}" width="76" height="30" rx="3" /><circle cx="${112 + r * 120}" cy="${111 + i * 42}" r="3" fill="currentColor" /><path d="M ${124 + r * 120} ${111 + i * 42} h 40" />`))}
-    <rect x="370" y="90" width="150" height="96" rx="12" transform="rotate(-8 445 138)" />
-    <g transform="rotate(-8 445 138)"><rect x="388" y="112" width="30" height="22" rx="3" /><path d="M 388 123 h 30 M 403 112 v 22" /><path d="M 388 160 h 60 M 460 160 h 30" /></g>
+    <g class="mv mv-fly"><rect x="370" y="90" width="150" height="96" rx="12" transform="rotate(-8 445 138)" />
+    <g transform="rotate(-8 445 138)"><rect x="388" y="112" width="30" height="22" rx="3" /><path d="M 388 123 h 30 M 403 112 v 22" /><path d="M 388 160 h 60 M 460 160 h 30" /></g></g>
     <path d="M 400 220 h 100 v 120 h -100 Z" /><path d="M 470 220 v 26 h 30" />
     <text x="414" y="268" font-size="20" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">PRD</text>
     <path d="M 414 290 h 70 M 414 304 h 56 M 414 318 h 64" stroke-width="1.4" />
@@ -155,6 +155,7 @@ window.Art = (() => {
     ${lines(6, (i) => `<path d="M ${50 + i * 63} 60 v 70 M ${50 + i * 63} 350 v -70" />`)}
     ${[0, 2, 3, 5].map((i) => `<rect x="${64 + i * 63}" y="72" width="36" height="52" rx="10" /><path d="M ${70 + i * 63} 90 h 24 M ${70 + i * 63} 108 h 24" />`).join("")}
     ${[1, 2, 4].map((i) => `<rect x="${64 + i * 63}" y="288" width="36" height="52" rx="10" /><path d="M ${70 + i * 63} 306 h 24 M ${70 + i * 63} 324 h 24" />`).join("")}
+    <g class="mv mv-park"><rect x="127" y="72" width="36" height="52" rx="10" /><path d="M 133 90 h 24 M 133 108 h 24" /></g>
     <path d="M 500 186 V 130" stroke-width="3" /><rect x="470" y="70" width="60" height="60" rx="8" />
     <text x="487" y="114" font-size="38" font-weight="700" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">P</text>
     <path d="M 270 150 c -16 0 -26 12 -26 24 c 0 16 26 42 26 42 c 0 0 26 -26 26 -42 c 0 -12 -10 -24 -26 -24 Z" /><circle cx="270" cy="174" r="8" />
@@ -167,7 +168,7 @@ window.Art = (() => {
     ${lines(3, (i) => `<path d="M ${175 + i * 30} ${150 + i * 32} H ${425 - i * 30}" />`)}
     ${hatch(268, 252, 64, 76, 10)}
     <path d="M 120 40 h 26 l 26 60 h 120 l 16 -40 h -150" /><circle cx="186" cy="112" r="8" /><circle cx="272" cy="112" r="8" />
-    ${lines(4, (i) => `<rect x="${196 + i * 24}" y="${68 - (i % 2) * 8}" width="18" height="18" rx="3" transform="rotate(${i * 12 - 18} ${205 + i * 24} ${77})" />`)}
+    <g class="mv mv-fall">${lines(4, (i) => `<rect x="${196 + i * 24}" y="${68 - (i % 2) * 8}" width="18" height="18" rx="3" transform="rotate(${i * 12 - 18} ${205 + i * 24} ${77})" />`)}</g>
     <path d="M 470 180 c 20 10 30 30 20 50" stroke-dasharray="5 6" /><rect x="480" y="236" width="70" height="40" rx="6" />
     <text x="490" y="263" font-size="20" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">23%</text>
     <path d="M 60 360 H 540" />
