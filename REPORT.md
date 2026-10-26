@@ -42,10 +42,13 @@ Signature interaction: **click anywhere on the paper to stamp it with ink** ("Ap
 portfolio/
 ├── site/                     ← the website (published folder)
 │   ├── index.html
+│   ├── case.html             ← case-study page (case.html?id=mednear, …)
 │   ├── stats.html            ← private analytics ledger
 │   └── assets/
 │       ├── content.js        ← ★ ALL your content lives here
 │       ├── app.js            ← rendering + interactions
+│       ├── stamps.js         ← stamp / postmark / motif drawing (shared)
+│       ├── resume.pdf        ← your résumé
 │       ├── styles.css
 │       └── track.js          ← cookie-free analytics client
 ├── netlify/functions/
@@ -90,9 +93,18 @@ Verified locally against a mock Netlify Blobs server: events are stored, bots an
 **Vercel (static only)**
 Import the repo; `vercel.json` publishes `site/`. The page works fully, but `/api/track` and form handling are Netlify features. On Vercel the tracker stays silent and the postcard falls back to opening the visitor's mail app. To get analytics there, enable Vercel Web Analytics.
 
-## 7. Next steps (to make it truly yours)
+## 7. Version 2: real content and case studies
 
-1. **Fill in `site/assets/content.js`** with your real résumé: name, letter, projects, route, skills, links.
-2. Add your résumé PDF at `site/assets/resume.pdf`.
+- All content now comes from Akshita's résumé; no placeholders remain.
+- **Featured "special issue":** MedNear is shown large, with headline numbers.
+- **Case-study pages** for every project, laid out as Problem → Discovery → Build → Design decision → AI evaluation → Go/no-go call → What it shows.
+- **Postage meter:** a key-numbers strip (15+ KPIs, ~40%, 20%, 129, ₹50K).
+- **Honours** shown as rubber stamps; skills grouped on the customs form.
+- **Airmail tape** marquee between the hero and the content.
+
+## 8. Next steps
+
+1. Read every sentence in `site/assets/content.js`. The letter and "What it shows" sections are written in your voice, so adjust anything that doesn't sound like you.
+2. Add real screenshots of MedNear to its case study (the biggest remaining upgrade).
 3. Pick a motif and ink for each project (or ask me for custom motifs, such as a stamp drawn for a specific project).
 4. Optional upgrades: a real photo engraved into the hero stamp (halftone filter), a "stamp sheet" view per project with screenshots, an OG share image of the envelope, and a custom domain.

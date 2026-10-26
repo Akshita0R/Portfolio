@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Case Study — Akshita R</title>
+  <meta name="description" content="Case study from Akshita R's portfolio." />
+  <meta name="theme-color" content="#efe6d4" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' fill='%23c4372b'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <a class="nav__brand" href="./" data-brand>№ —</a>
+    <nav class="nav__links" aria-label="Sections">
+      <a href="./#collection">Collection</a>
+      <a href="./#route">Route</a>
+      <a href="./#postcard">Postcard</a>
+    </nav>
+    <a class="nav__ink" href="./#collection" style="text-decoration:none">← All issues</a>
+  </header>
+
+  <main class="case" data-case></main>
+
+  <footer class="footer mono">
+    <span>Postage paid · <span data-name></span></span>
+    <a href="./#postcard">Send a postcard →</a>
+  </footer>
+
+  <script src="assets/content.js"></script>
+  <script src="assets/stamps.js"></script>
+  <script src="assets/track.js"></script>
+  <script>
+    (() => {
+      const P = window.PORTFOLIO;
+      const { esc, postmark, projectStamp, now } = window.Stamps;
+      const id = new URLSearchParams(location.search).get("id");
+      const i = Math.max(0, P.projects.findIndex((p) => p.id === id));
+      const p = P.projects[i];
+      const next = P.projects[(i + 1) % P.projects.length];
+      document.title = `${p.title} — ${P.name}`;
+      document.querySelectorAll("[data-name]").forEach((el) => (el.textContent = P.name));
+      document.querySelector("[data-brand]").textContent = `№ ${P.initials}-${now.getFullYear()}`;
+      window.track && window.track("project", p.id + "-case");
+
+      const stats = (list) => list && list.length
+        ? `<div class="case__stats">${list.map((s) => `<div><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`).join("")}</div>` : "";
+
+      document.querySelector("[data-case]").innerHTML = `
+        <a class="case__back mono" href="./#collection">← Back to the collection</a>
+        <section class="case__hero">
+          <div>
+            <p class="mono kicker">Case study · №${esc(p.no)} · ${esc(p.category)}</p>
+            <h1>${esc(p.title)}</h1>
+            <p class="case__tagline">${esc(p.tagline || p.summary)}</p>
+          </div>
+          <div class="case__stamp">${projectStamp(p)}
+            <div class="postmark" aria-hidden="true">${postmark({ top: p.category, bottom: "First day of issue", mid: String(p.year), sub: `№ ${p.no}` })}</div>
+          </div>
+        </section>
+        <dl class="case__facts">
+          <div><dt>Role</dt><dd>${esc(p.role)}</dd></div>
+          <div><dt>Timeline</dt><dd>${esc(p.timeline || p.year)}</dd></div>
+          <div><dt>Toolkit</dt><dd>${p.stack.map(esc).join(" · ")}</dd></div>
+          <div><dt>Outcome</dt><dd>${esc(p.outcome)}</dd></div>
+        </dl>
+        <ul class="highlights">${(p.highlights || []).map((h) => `<li><b>${esc(h.value)}</b><span>${esc(h.label)}</span></li>`).join("")}</ul>
+        ${(p.case || []).map((s, n) => `
+          <section class="case__section">
+            <h2><span class="case__num">${String(n + 1).padStart(2, "0")}</span>${esc(s.h)}</h2>
+            <div>
+              ${(s.p || []).map((t) => `<p>${esc(t)}</p>`).join("")}
+              ${s.list ? `<ul>${s.list.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : ""}
+              ${stats(s.stats)}
+            </div>
+          </section>`).join("")}
+        ${p.links.length ? `<div class="catalogue__links" style="margin-top:32px">${p.links.map((l) => `<a class="btn" href="${esc(l.url)}" target="_blank" rel="noopener" data-out="${esc(p.id)}-${esc(l.label)}">${esc(l.label)} ↗</a>`).join("")}</div>` : ""}
+        <a class="case__next" href="case.html?id=${encodeURIComponent(next.id)}">
+          <div><p class="mono kicker">Next issue · №${esc(next.no)}</p><h2>${esc(next.title)}</h2><p class="case__tagline" style="font-size:1.05em">${esc(next.tagline || "")}</p></div>
+          ${projectStamp(next)}
+        </a>`;
+      document.addEventListener("click", (e) => {
+        const out = e.target.closest("[data-out]");
+        if (out) window.track && window.track("link", out.dataset.out);
+      });
+    })();
+  </script>
+</body>
+</html>

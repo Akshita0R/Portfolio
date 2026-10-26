@@ -418,3 +418,81 @@ p { margin: 0 0 1em; }
   .album__btn .stamp__frame { font-size: 10px; }
   .album__caption .album__cta { display: none; }
 }
+
+/* ---------------------------------------------------------- airmail tape ---- */
+.tape { overflow: hidden; background: var(--ink); color: var(--paper); transform: rotate(-1.4deg); margin: 0 -20px; border-block: 6px solid transparent; border-image: repeating-linear-gradient(-45deg, var(--red) 0 10px, var(--paper) 10px 16px, var(--blue) 16px 26px, var(--paper) 26px 32px) 6; }
+.tape__track { display: flex; width: max-content; animation: tape 40s linear infinite; font-family: var(--mono); font-size: 13px; letter-spacing: .22em; text-transform: uppercase; padding: 12px 0; white-space: pre; }
+@keyframes tape { to { transform: translateX(-50%); } }
+
+/* -------------------------------------------------------- postage meter ---- */
+.meter-wrap { padding-block: clamp(56px, 9vh, 96px) 0; }
+.meter { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr)); border: 2px solid var(--red); background: var(--card); box-shadow: var(--shadow); }
+.meter__cell { padding: 22px 20px; border-right: 1px dashed color-mix(in srgb, var(--red) 50%, transparent); display: grid; gap: 6px; }
+.meter__cell:last-child { border-right: 0; }
+.meter__cell b { font-size: clamp(34px, 4vw, 52px); font-weight: 800; color: var(--red); line-height: 1; letter-spacing: -.03em; }
+.meter__cell .mono { font-size: 10.5px; color: var(--ink-soft); line-height: 1.4; }
+@media (max-width: 560px) { .meter__cell { border-right: 0; border-bottom: 1px dashed color-mix(in srgb, var(--red) 50%, transparent); } }
+
+/* -------------------------------------------------------- featured issue ---- */
+.featured { display: grid; grid-template-columns: minmax(0, 360px) 1fr; gap: clamp(28px, 5vw, 72px); align-items: center; background: var(--card); box-shadow: var(--shadow); padding: clamp(24px, 5vw, 64px); margin-bottom: clamp(40px, 7vh, 72px); position: relative; border-top: 6px solid var(--teal, #1d6b6b); }
+.featured__stamp { position: relative; display: block; text-decoration: none; transform: rotate(-2deg); transition: transform .35s cubic-bezier(.2, .8, .2, 1); }
+.featured__stamp:hover { transform: rotate(0) scale(1.02); }
+.featured__stamp .stamp__frame { font-size: clamp(14px, 2vw, 22px); }
+.featured__pm { position: absolute; width: 52%; right: -16%; bottom: -8%; transform: rotate(14deg); }
+.featured h3 { font-size: clamp(48px, 7vw, 92px); margin: 4px 0 6px; }
+.featured__tagline { font-size: 1.25em; font-style: italic; color: var(--ink-soft); }
+.highlights { list-style: none; padding: 0; margin: 24px 0 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; }
+.highlights li { border-left: 3px solid var(--red); padding: 2px 0 2px 14px; display: grid; }
+.highlights b { font-size: clamp(24px, 2.6vw, 34px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+.highlights span { font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.album__label { color: var(--ink-faint); margin: 0 0 16px; }
+@media (max-width: 760px) { .featured { grid-template-columns: 1fr; } .featured__stamp { max-width: 260px; } }
+
+/* --------------------------------------------------- route extras ---- */
+.route__place { margin-bottom: 8px; }
+.route__points { margin: 0; padding-left: 1.1em; color: var(--ink-soft); font-size: .95em; }
+.route__points li { margin: 3px 0; }
+.route__points li::marker { content: "✦  "; color: var(--red); font-size: .8em; }
+.honours { margin-top: clamp(48px, 8vh, 80px); }
+.honours__list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 14px 16px; }
+.honour { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); border: 2px solid var(--blue); border-radius: 4px; padding: 7px 12px; transform: rotate(var(--rot)); background: var(--card); }
+.honour:nth-child(3n) { color: var(--red); border-color: var(--red); }
+.customs__table td.mono { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); vertical-align: top; padding-top: 14px; }
+
+/* ------------------------------------------------------------ case page ---- */
+.case { max-width: 1100px; margin: 0 auto; padding: 110px var(--gutter) 40px; }
+.case__back { display: inline-block; margin-bottom: 28px; text-decoration: none; color: var(--ink-soft); }
+.case__back:hover { color: var(--red); }
+.case__hero { display: grid; grid-template-columns: 1fr minmax(0, 320px); gap: clamp(28px, 6vw, 80px); align-items: center; margin-bottom: clamp(40px, 7vh, 72px); }
+.case__hero h1 { font-size: clamp(56px, 10vw, 128px); margin: 6px 0 14px; }
+.case__tagline { font-size: clamp(20px, 2.2vw, 28px); font-style: italic; color: var(--ink-soft); line-height: 1.35; margin: 0; }
+.case__stamp { position: relative; transform: rotate(2deg); }
+.case__stamp .stamp__frame { font-size: clamp(14px, 2vw, 21px); }
+.case__stamp .postmark { position: absolute; width: 56%; left: -26%; bottom: 4%; transform: rotate(-14deg); }
+.case__facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); border: 2px solid var(--ink); background: var(--card); margin: 0 0 clamp(32px, 6vh, 56px); }
+.case__facts div { padding: 16px 20px; border-right: 1px solid var(--ink); }
+.case__facts div:last-child { border-right: 0; }
+.case__facts dt { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+.case__facts dd { margin: 6px 0 0; font-size: .95em; }
+@media (max-width: 760px) { .case__hero { grid-template-columns: 1fr; } .case__stamp { max-width: 240px; } .case__facts div { border-right: 0; border-bottom: 1px solid var(--ink); } }
+.case .highlights { margin: 0 0 clamp(48px, 8vh, 88px); }
+.case .highlights b { font-size: clamp(32px, 4vw, 56px); color: var(--red); }
+.case__section { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 680px); gap: clamp(16px, 4vw, 56px); padding: clamp(32px, 5vh, 56px) 0; border-top: 1px dashed var(--line); }
+.case__section h2 { font-size: clamp(26px, 3vw, 38px); }
+.case__num { display: block; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; color: var(--red); margin-bottom: 10px; font-weight: 400; }
+.case__section ul { padding-left: 1.1em; margin: 0 0 1em; }
+.case__section li { margin: 6px 0; }
+.case__section li::marker { content: "✦  "; color: var(--red); font-size: .8em; }
+.case__stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-top: 18px; }
+.case__stats div { background: var(--card); box-shadow: var(--shadow); padding: 18px; border-top: 3px solid var(--blue); }
+.case__stats b { display: block; font-size: clamp(28px, 3.4vw, 44px); font-weight: 800; letter-spacing: -.02em; line-height: 1.05; }
+.case__stats span { font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+@media (max-width: 760px) { .case__section { grid-template-columns: 1fr; } }
+.case__next { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; margin-top: clamp(48px, 8vh, 80px); padding: clamp(24px, 4vw, 40px); background: var(--card); box-shadow: var(--shadow); text-decoration: none; transition: transform .25s; }
+.case__next:hover { transform: translateY(-4px); }
+.case__next h2 { font-size: clamp(34px, 5vw, 64px); }
+.case__next .stamp-wrap { width: clamp(90px, 14vw, 140px); transform: rotate(4deg); }
+.case__next .stamp__frame { font-size: 10px; }
+.case__stamp .postmark { left: -34%; bottom: -10%; width: 50%; }
+@media (min-width: 900px) { .album__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.featured .highlights { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
