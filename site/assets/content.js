@@ -30,12 +30,16 @@ window.PORTFOLIO = {
       { org: "Volopay", role: "Backend Engineer" },
       { org: "MedNear", role: "Founder · 0→1" },
       { org: "CMR Institute of Technology", role: "B.E. CSE · 8.78" },
+      { org: "Hockey", role: "State-level player" },
       { org: "Rise Club", role: "President" },
       { org: "Srishti 2024", role: "Finalist" },
       { org: "Smart Argothon 2023", role: "Finalist" },
       { org: "WIE Competition", role: "5th place" },
     ],
   },
+
+  // "Beyond work" on the About section.
+  beyond: { title: "State-level hockey player", text: "Years of competitive hockey taught me to read the game fast, hold my position under pressure and trust the team around me. Turns out that's most of product work too." },
 
   skills: [
     { group: "Product", items: "User research · PRDs · MVP scoping · RICE · KPIs · Funnel analysis · Agile/Scrum" },
@@ -60,7 +64,7 @@ window.PORTFOLIO = {
     ] },
   ],
   education: [{ org: "CMR Institute of Technology", role: "B.E. Computer Science · CGPA 8.78/10", when: "2021 – 2025" }],
-  awards: ["Merit Scholarship", "Best Mini-Project (Sem 1–5)", "President, Rise Club", "5th, WIE Competition", "₹50K grant · Srishti 2024 & Smart Argothon 2023 finalist · patent filed"],
+  awards: ["State-level hockey player", "Merit Scholarship", "Best Mini-Project (Sem 1–5)", "President, Rise Club", "5th, WIE Competition", "₹50K grant · Srishti 2024 & Smart Argothon 2023 finalist · patent filed"],
 
   // Projects: `scene` picks the illustration: "pharmacy" | "dashboard" | "funnel" | "parking" | "server"
   projects: [

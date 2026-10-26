@@ -233,11 +233,18 @@ window.Art = (() => {
     </svg>`;
   };
 
+  // Two crossed hockey sticks and a ball.
+  const hockey = () => svg("0 0 120 120", `
+    <path d="M 28 14 L 74 86 q 6 10 18 8 l 10 -2" stroke-width="3" /><path d="M 92 14 L 46 86 q -6 10 -18 8 l -10 -2" stroke-width="3" />
+    <path d="M 30 22 l 6 -4 M 90 22 l -6 -4" stroke-width="5" />
+    <circle cx="60" cy="104" r="7" fill="currentColor" />
+  `, "Two crossed hockey sticks and a ball");
+
   const avatar = (initials) => svg("0 0 60 60", `
     <circle cx="30" cy="30" r="27" />
     <text x="30" y="37" text-anchor="middle" font-size="19" fill="currentColor" stroke="none" font-family="Newsreader, Georgia, serif">${initials}</text>
   `);
 
   const scenes = { pharmacy, dashboard, server, parking, funnel };
-  return { platform, train, station, construction, miniTrain, walker, avatar, scene: (k) => (scenes[k] || dashboard)() };
+  return { platform, train, station, construction, miniTrain, walker, hockey, avatar, scene: (k) => (scenes[k] || dashboard)() };
 })();

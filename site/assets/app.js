@@ -37,6 +37,7 @@
     "checking which pharmacy is open. old habit.",
     "next stop: work →",
     "I'd A/B test this platform if I could",
+    "hockey practice at 6, then the 8:15 metro",
   ];
   let line = -1;
   const place = () => {
@@ -81,9 +82,16 @@
 
   const ticket = $("[data-ticket]");
   $("[data-stamp]").innerHTML = `Validated<br>${today.slice(0, 6)}<br>${time}`;
+  let lastPointer = "mouse";
+  ticket.addEventListener("pointerdown", (e) => (lastPointer = e.pointerType));
   ticket.addEventListener("click", (e) => {
     const first = !ticket.classList.contains("is-stamped");
-    if (e.detail) {
+    if (e.detail && lastPointer !== "mouse") {
+      // Touch: land the stamp on the right half of the ticket.
+      ticket.style.setProperty("--sx", "68%");
+      ticket.style.setProperty("--sy", "58%");
+      ticket.classList.add("is-placed");
+    } else if (e.detail) {
       // Mouse/touch click: ink lands where the stamp came down (keyboard keeps the default spot).
       const r = ticket.getBoundingClientRect();
       ticket.style.setProperty("--sx", `${Math.min(Math.max(e.clientX - r.left, 30), r.width - 30)}px`);
@@ -203,6 +211,7 @@
   $("[data-resume-link]").href = P.resumeUrl;
   $("[data-resume-link]").addEventListener("click", () => track("resume", "about"));
   $("[data-roles]").innerHTML = P.about.roles.map((r) => `<li><span>${esc(r.org)}</span><span>${esc(r.role)}</span></li>`).join("");
+  if (P.beyond) $("[data-beyond]").innerHTML = `<div class="beyond__art">${Art.hockey()}</div><div><p class="kicker">Beyond work</p><h3>${esc(P.beyond.title)}</h3><p>${esc(P.beyond.text)}</p></div>`;
   $("[data-skills]").innerHTML = P.skills.map((s) => `<div><dt>${esc(s.group)}</dt><dd>${esc(s.items)}</dd></div>`).join("");
   $('[data-art="station"]').innerHTML = Art.station();
   $("[data-polaroid]").innerHTML = `<div class="polaroid__img">${P.photo ? `<img src="${esc(P.photo)}" alt="${esc(P.name)}">` : Art.avatar(P.name.split(" ").map((w) => w[0]).join(""))}</div><figcaption class="polaroid__cap">hi, I'm ${esc(P.first)}!</figcaption>`;

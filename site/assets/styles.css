@@ -114,7 +114,7 @@ main { margin-left: var(--side); padding: 76px var(--gutter) 0; }
 .ticket::before, .ticket::after { content: ""; position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; background: var(--panel); border: 2px solid var(--blue); translate: 0 -50%; }
 .ticket::before { left: -10px; clip-path: inset(0 0 0 50%); }
 .ticket::after { right: -10px; clip-path: inset(0 50% 0 0); }
-.ticket__route { font-family: var(--serif); font-size: 22px; grid-column: 1 / -1; display: flex; align-items: baseline; gap: 10px; }
+.ticket__route { font-family: var(--serif); font-size: clamp(18px, 5vw, 22px); grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
 .ticket__route small { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; }
 .ticket__meta { font-size: 10px; line-height: 1.5; letter-spacing: .08em; text-transform: uppercase; }
 .ticket__meta b { display: block; font-size: 13px; font-weight: 500; }
@@ -202,6 +202,14 @@ main { margin-left: var(--side); padding: 76px var(--gutter) 0; }
 .about__text p { color: var(--soft); }
 .about__links { display: grid; gap: 4px; margin: 18px 0 30px; }
 .about__links a { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--faint); }
+.beyond { display: grid; grid-template-columns: 84px 1fr; gap: 18px; align-items: center; border: 1px solid var(--rule); border-radius: 4px; padding: 16px 18px; margin: 4px 0 30px; }
+.beyond:empty { display: none; }
+.beyond__art { width: 84px; height: 84px; border-radius: 50%; border: 1.5px solid var(--white); display: grid; place-items: center; }
+.beyond__art .art { width: 56px; }
+.beyond h3 { font-size: 22px; margin-bottom: 6px; }
+.beyond p:last-child { margin: 0; color: var(--soft); font-size: 13px; }
+.beyond .kicker { margin-bottom: 4px; }
+@media (max-width: 420px) { .beyond { grid-template-columns: 1fr; } }
 .ledger { list-style: none; padding: 0; margin: 0 0 28px; border-top: 1px solid var(--rule); }
 .ledger li { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--rule); font-size: 12.5px; }
 .ledger li span:last-child { color: var(--soft); text-align: right; }
@@ -312,6 +320,19 @@ body.is-recruiter main { padding-top: 34px; }
 @media (max-width: 560px) { .rrow { grid-template-columns: 1fr; } .rrow__when { text-align: left; } }
 
 /* ------------------------------------------------------------- mobile ---- */
+.swipe { display: none; }
+@media (max-width: 700px) {
+  /* The train stays readable on phones: swipe sideways through the carriages. */
+  .panel--wide { min-height: 0; padding-top: 0; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
+  .panel--wide .panel__caption { position: sticky; left: 0; display: block; padding: 10px 14px 4px; line-height: 1.5; }
+  .panel--wide .art { min-width: 760px; }
+  .swipe { display: inline; font-weight: 500; }
+}
+@media (max-width: 480px) {
+  .ticket { padding: 12px 14px 10px; gap: 4px 12px; }
+  .ticket__stamp { width: 80px; height: 80px; font-size: 8px; }
+  .ticket:not(.is-placed) .ticket__stamp { right: -8px; top: -30px; }
+}
 @media (max-width: 820px) {
   :root { --side: 0px; }
   .side { position: static; width: auto; border-right: 0; border-bottom: 1px solid var(--rule); padding: 20px var(--gutter); display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-items: center; }
