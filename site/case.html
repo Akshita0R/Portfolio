@@ -34,6 +34,7 @@
       const P = window.PORTFOLIO;
       const { esc } = Shell;
       Shell.render({ base: "./", current: "work" });
+      document.querySelector("[data-recruiter]").addEventListener("click", () => (location.href = "./?mode=recruiter"));
       const id = new URLSearchParams(location.search).get("id");
       const i = Math.max(0, P.projects.findIndex((p) => p.id === id));
       const p = P.projects[i];

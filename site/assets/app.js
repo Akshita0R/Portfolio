@@ -30,13 +30,75 @@
 
   const ticket = $("[data-ticket]");
   $("[data-stamp]").innerHTML = `Validated<br>${today.slice(0, 6)}<br>${time}`;
-  ticket.addEventListener("click", () => {
+  ticket.addEventListener("click", (e) => {
     const first = !ticket.classList.contains("is-stamped");
+    if (e.detail) {
+      // Mouse/touch click: ink lands where the stamp came down (keyboard keeps the default spot).
+      const r = ticket.getBoundingClientRect();
+      ticket.style.setProperty("--sx", `${Math.min(Math.max(e.clientX - r.left, 30), r.width - 30)}px`);
+      ticket.style.setProperty("--sy", `${Math.min(Math.max(e.clientY - r.top, 20), r.height - 20)}px`);
+      ticket.classList.add("is-placed");
+    }
     ticket.classList.remove("is-stamped");
     void ticket.offsetWidth; // restart the stamp animation
     ticket.classList.add("is-stamped");
     if (first) track("envelope", "ticket-stamped");
   });
+
+  // The pointer becomes a rubber stamp over the ticket panel (mouse only).
+  const panel = $(".ticket-panel"), stamper = $("[data-stamper]");
+  panel.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse") return;
+    const r = panel.getBoundingClientRect();
+    panel.classList.add("has-stamper");
+    // Hotspot is the stamp face, at about (30%, 66%) of the 110px drawing.
+    stamper.style.transform = `translate(${e.clientX - r.left - 33}px, ${e.clientY - r.top - 73}px)`;
+  });
+  panel.addEventListener("pointerleave", () => panel.classList.remove("has-stamper"));
+  panel.addEventListener("pointerdown", () => stamper.classList.add("is-down"));
+  addEventListener("pointerup", () => stamper.classList.remove("is-down"));
+
+  // Recruiter mode: the same content as a plain, scannable résumé.
+  const rmode = $("[data-rmode]");
+  const rbtn = $("[data-recruiter]");
+  rmode.innerHTML = `
+    <div class="rmode__bar">
+      <a class="btn" href="${esc(P.resumeUrl)}" target="_blank" rel="noopener" data-resume-r>Download PDF ↗</a>
+      ${P.links.map((l) => `<a class="btn btn--line" href="${esc(l.url)}" ${l.url.startsWith("mailto") ? "" : 'target="_blank" rel="noopener"'}>${esc(l.label)}</a>`).join("")}
+      <button class="btn btn--line" type="button" data-recruiter-exit>← Illustrated site</button>
+    </div>
+    <h1>${esc(P.name)}</h1>
+    <p class="rmode__sub">${esc(P.now.text)} → ${esc(P.next.text)} · ${esc(P.city)} · <a href="mailto:${esc(P.email)}">${esc(P.email)}</a></p>
+    <p class="rmode__summary">${esc(P.summary)}</p>
+    <h2>Experience</h2>
+    ${P.experience.map((x) => `<div class="rrow"><div><h3>${esc(x.org)}</h3><div class="rrow__role">${esc(x.role)}</div></div><div class="rrow__when">${esc(x.when)}<br>${esc(x.where)}</div>
+      <ul>${x.points.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>`).join("")}
+    <h2>Projects</h2>
+    ${P.projects.filter((p) => !/ at /.test(p.title)).map((p) => `<div class="rrow"><div><h3>${esc(p.title)}</h3><div class="rrow__role">${esc(p.label)} · ${esc(p.tools)}</div></div><div class="rrow__when">${esc(p.year)}<br><a href="${caseUrl(p)}">Case study →</a></div></div>`).join("")}
+    <h2>Education</h2>
+    ${P.education.map((x) => `<div class="rrow"><div><h3>${esc(x.org)}</h3><div class="rrow__role">${esc(x.role)}</div></div><div class="rrow__when">${esc(x.when)}</div></div>`).join("")}
+    <h2>Skills</h2>
+    <dl class="skills">${P.skills.map((s) => `<div><dt>${esc(s.group)}</dt><dd>${esc(s.items)}</dd></div>`).join("")}</dl>
+    <h2>Awards</h2>
+    <ul class="rrow" style="display:block;padding-left:1.1em;color:var(--soft)">${P.awards.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>`;
+  const setRecruiter = (on, user) => {
+    document.body.classList.toggle("is-recruiter", on);
+    rmode.hidden = !on;
+    rbtn.setAttribute("aria-pressed", String(on));
+    rbtn.textContent = on ? "Exit recruiter mode" : "Recruiter mode";
+    const url = new URL(location.href);
+    on ? url.searchParams.set("mode", "recruiter") : url.searchParams.delete("mode");
+    history.replaceState(null, "", url);
+    if (!on) sizeCanvas();
+    if (user) {
+      scrollTo(0, 0);
+      if (on) track("section", "recruiter-mode");
+    }
+  };
+  rbtn.addEventListener("click", () => setRecruiter(!document.body.classList.contains("is-recruiter"), true));
+  $("[data-recruiter-exit]").addEventListener("click", () => setRecruiter(false, true));
+  $("[data-resume-r]").addEventListener("click", () => track("resume", "recruiter-mode"));
+  if (new URLSearchParams(location.search).get("mode") === "recruiter") setRecruiter(true, false);
 
   // Work cards
   $("[data-cards]").innerHTML = P.projects
@@ -79,6 +141,7 @@
   const ctx = canvas.getContext("2d");
   const sizeCanvas = () => {
     const r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    if (!r.width) return;
     canvas.width = r.width * dpr;
     canvas.height = r.height * dpr;
     ctx.scale(dpr, dpr);
@@ -99,7 +162,12 @@
   });
   ["pointerup", "pointercancel"].forEach((t) => canvas.addEventListener(t, () => (drawing = false)));
   $("[data-clear]").addEventListener("click", () => ctx.clearRect(0, 0, canvas.width, canvas.height));
-  addEventListener("resize", () => { const img = ctx.getImageData(0, 0, canvas.width, canvas.height); sizeCanvas(); ctx.putImageData(img, 0, 0); });
+  addEventListener("resize", () => {
+    if (!canvas.width || !canvas.getBoundingClientRect().width) return sizeCanvas(); // hidden (recruiter mode)
+    const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    sizeCanvas();
+    ctx.putImageData(img, 0, 0);
+  });
 
   // Reveal on scroll
   const io = new IntersectionObserver((es) => es.forEach((en) => en.isIntersecting && (en.target.classList.add("is-in"), io.unobserve(en.target))), { threshold: 0.12 });

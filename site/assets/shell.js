@@ -16,7 +16,8 @@ window.Shell = (() => {
       </dl>
       <div class="side__foot">
         <div class="side__train">${Art.miniTrain()}</div>
-        <a class="btn btn--line" href="${esc(P.resumeUrl)}" target="_blank" rel="noopener" data-resume>Résumé ↗</a>
+        <button class="btn" type="button" data-recruiter aria-pressed="false">Recruiter mode</button>
+        <a class="side__pdf" href="${esc(P.resumeUrl)}" target="_blank" rel="noopener" data-resume>Résumé PDF ↗</a>
       </div>`;
     document.querySelector("[data-metro]").innerHTML = `
       <nav class="metro__line" aria-label="Sections">

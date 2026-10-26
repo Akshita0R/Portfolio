@@ -44,6 +44,24 @@ window.PORTFOLIO = {
     { group: "Tools", items: "Power BI · Microsoft Fabric · Excel · Jira · Confluence" },
   ],
 
+  // Shown in Recruiter mode: the plain, scannable résumé.
+  summary: "Data Analyst with 1.5+ years in enterprise SaaS and prior backend engineering in a fintech product team, transitioning to Associate Product Manager. Built MedNear 0→1, from user research and PRD to live launch, and ran a 129-case AI evaluation that drove the go/no-go call.",
+  experience: [
+    { org: "CSG Systems International", role: "Data Analyst, Product & Analytics", when: "Feb 2025 – Present", where: "Bengaluru", points: [
+      "Defined and tracked 15+ product KPIs with Product and Engineering across 10+ Power BI dashboards, cutting manual reporting time by ~40%.",
+      "Set SQL and data-quality standards adopted across a 6-person reporting pipeline, reducing rework by 25%.",
+      "Ran funnel analysis across 5+ reporting workflows, uncovered a 20% drop-off pattern, and informed 3 product changes.",
+      "Presented data-backed recommendations to Product and Leadership, shaping prioritisation across 10+ sprints.",
+    ] },
+    { org: "Volopay", role: "Backend Engineer, Product Team", when: "Apr 2024 – Feb 2025", where: "Bengaluru", points: [
+      "Translated user-behaviour data into sprint priorities and feature specs with Product Managers across 10+ sprints.",
+      "Gave technical input on requirements for 5+ PRDs, assessing feasibility and trade-offs.",
+      "Optimised SQL queries powering product analytics, cutting pipeline latency by 30%.",
+    ] },
+  ],
+  education: [{ org: "CMR Institute of Technology", role: "B.E. Computer Science · CGPA 8.78/10", when: "2021 – 2025" }],
+  awards: ["Merit Scholarship", "Best Mini-Project (Sem 1–5)", "President, Rise Club", "5th, WIE Competition", "₹50K grant · Srishti 2024 & Smart Argothon 2023 finalist · patent filed"],
+
   // Projects: `scene` picks the illustration: "pharmacy" | "dashboard" | "funnel" | "parking" | "server"
   projects: [
     {
